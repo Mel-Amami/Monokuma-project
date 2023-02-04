@@ -1,0 +1,97 @@
+@import "vars";
+@import "mixins";
+
+
+/* Default styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-image: url("assets/img/vanitas.png");
+
+    font-family: 'Russo One';
+}
+
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+main {
+    position: absolute;
+    display: flex;
+}
+
+h1{
+    text-align: center;
+    color:rgb(0, 221, 255) ;
+    font-size: xx-large;
+    
+}
+
+ 
+h2{
+    color:aqua ;
+}
+p {
+    color: rgb(203, 49, 211);
+}
+
+.card {
+    
+    width: 200px;
+    height: 200px;
+    background: rgba(44, 43, 43, 0.545);
+    border-radius: 30px;
+}
+
+.card2 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.text{
+    color:rgb(203, 49, 211)  ;
+
+}
+
+
+.text2 {
+    color: rgb(70, 44, 79);
+    text-align: center;
+    list-style: none;
+    font-size: x-large;
+}
+
+.img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.img2 {
+    width: 1920px;
+    height: 1500px;
+}
+
+.img2 img {
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+   
+    background: rgba(44, 43, 43, 0.545);
+   padding:55px;
+}
+
+
+/* Blocks */
+
+
+/* Vendor libs */
