@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="menu">
+                <h2>Мемуары Ванитаса</h2>
+                <ul class="nav-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="characters.html">Персонажи</a></li>
+                    <li><a href="theories.html">Теории</a></li>
+                    <li><a href="arts.html">Арты</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="facts.html">Интересные факты</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="reviews">
+            <div class="container">
+                <h1>Отзывы пользователей</h1>
+                <div class="review-list">
+                    <div class="review">
+                        <h3>Сатору Годжо</h3>
+                        <p>Отличный сайт! Нашёл много интересных теорий.</p>
+                        <div class="review-actions">
+                            <button class="like-btn">👍</button>
+                            <button class="dislike-btn">👎</button>
+                            <button class="report-btn">🚨</button>
+                        </div>
+                    </div>
+                    <div class="review">
+                        <h3>Макима</h3>
+                        <p>Мне нравится галерея артов, очень атмосферно!</p>
+                        <div class="review-actions">
+                            <button class="like-btn">👍</button>
+                            <button class="dislike-btn">👎</button>
+                            <button class="report-btn">🚨</button>
+                        </div>
+                    </div>
+                    <div class="review">
+                        <h3>Саске</h3>
+                        <p>Ресурс удобный, оформление классное.</p>
+                        <div class="review-actions">
+                            <button class="like-btn">👍</button>
+                            <button class="dislike-btn">👎</button>
+                            <button class="report-btn">🚨</button>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="review-form">
+                    <h2>Оставьте отзыв</h2>
+                    <label for="name">Ваше имя:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="comment">Ваш отзыв:</label>
+                    <textarea id="comment" name="comment" rows="4" required></textarea>
+
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VanitasNoCarte. Все права защищены.</p>
+    </footer>
+
+</body>
+
+</html>

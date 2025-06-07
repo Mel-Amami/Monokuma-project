@@ -1,53 +1,87 @@
----
-layout: default
-title: VanitasNoCarte
----
+<!DOCTYPE html>
+<html lang="ru">
 
-<!--
-  <div class="img2">
-  <img src="assets/img/vanitas.png" alt="sss">
-</div>
--->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VanitasNoCarte</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 
-<main>
-  <aside>
-    <div class="card">
-      <ul class="text">
-        <h2>Мемуары Ванитаса</h2>
-        <li>Персонажи </li>
-      <li>Теории</li>
-        <li>Отзывы</li>
-      <li>Инересные факты</li>
-        <li>Арты</li>
-      </ul>
-    </div>
-  </aside>
-  
-  <section class="back">
-    
-      
-    <div class="container">
-      <div class="content">
-        <h1>Добро пожаловать в фандом МВ!</h1>
-      <div class="card2">
-        <div class="img">
-            <img src="assets/img/Wisparik_vanitas_poka_poka.jpg" alt="ddd">
+</head>
+
+<body>
+
+    <header>
+    <nav class="navbar">
+        <div class="menu">
+            <h2>Мемуары Ванитаса</h2>
+            <ul class="nav-links">
+                <li><a href="characters.html">Персонажи</a></li>
+                <li><a href="theories.html">Теории</a></li>
+                <li><a href="arts.html">Арты</a></li>
+                <li><a href="reviews.html">Отзывы</a></li>
+                <li><a href="facts.html">Интересные факты</a></li>
+                <li><a href="personal.html">Личный кабинет</a></li>
+
+            </ul>
+            <div class="search-box">
+                <input type="text" placeholder="Поиск...">
+                <button type="submit">🔍</button>
+            </div>
         </div>
-      
-    
-        <ul class="text2">
-          <li>Здесь вы можете найти:</li>
-          <li>1. Интересные факты и информацию o персонажах.</li>
-          <li>2. Теории и догадки.</li>
-          <li> 3. Дополнять информацию в отзывах.</li>
-          <li>4. Любимых авторов артов и сами работы.</li>
-    
-        </ul>
-      </div>
-    
-      </div>
-    </div>
-    
-  </section>
-</main>
+    </nav>
+</header>
 
+
+    <main>
+        <section class="hero">
+            <!-- <div class="gallery">
+            <img src="assets/img/Group 57.png" alt="Фон">
+
+        </div> -->
+
+            <div class="container">
+                
+                <div class="content">
+                    <h1>Добро пожаловать в фандом МВ!</h1>
+                    <figure class="img">
+                        <img src="assets/img/Wisparik_vanitas_poka_poka.jpg" alt="Ванитас">
+                    </figure>
+                    <ul class="features">
+                        <h2>Здесь вы сможете найти:</h2>
+                        <li>1.Интересные факты и информация о персонажах.</li>
+                        <li>2.Теории и догадки.</li>
+                        <li>3.Обсуждение и отзывы.</li>
+                        <li>4.Галерея артов от любимых авторов.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="registration">
+            <div class="register-card">
+                <h2>Регистрация</h2>
+                <form id="register-form">
+                    <label for="username">Имя пользователя</label>
+                    <input type="text" id="username" name="username" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <button type="submit">Зарегистрироваться</button>
+                    <button id="login-btn">Вход</button> 
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VanitasNoCarte. Все права защищены.</p>
+    </footer>
+
+</body>
+
+</html>

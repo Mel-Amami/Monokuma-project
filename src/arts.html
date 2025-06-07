@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Арты</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="menu">
+            <h2>Мемуары Ванитаса</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="characters.html">Персонажи</a></li>
+                <li><a href="theories.html">Теории</a></li>
+                <li><a href="arts.html">Арты</a></li>
+                <li><a href="reviews.html">Отзывы</a></li>
+                <li><a href="facts.html">Интересные факты</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="arts">
+        <div class="container">
+            <h1>Галерея артов</h1>
+            <div class="gallery">
+                <div class="art">
+                    <img src="assets/img/photo_2022-08-07_07-29-59.jpg" alt="Арт 1" class="preview">
+                    <div class="art-actions">
+                        <button class="like-btn">👍</button>
+                        
+                    </div>
+                </div>
+
+                <div class="art">
+                    <img src="assets/img/photo_2022-06-03_01-18-22.jpg" alt="Арт 2" class="preview">
+                    <div class="art-actions">
+                        <button class="like-btn">👍</button>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <form class="upload-form">
+                <h2>Загрузите свой арт</h2>
+                <input type="file" id="upload-file" accept="image/*" required>
+                <button type="submit">Загрузить</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 VanitasNoCarte. Все права защищены.</p>
+</footer>
+
+<!-- Окно просмотра арта -->
+<div class="modal">
+    <button class="close-modal">Закрыть</button> <!-- ✅ Размещена правильно -->
+    <div class="modal-content-wrapper">
+        <span class="close-btn">&times;</span>
+        <img class="modal-content">
+    </div>
+</div>
+
+
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>

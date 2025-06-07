@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теории</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="menu">
+            <h2>Мемуары Ванитаса</h2>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="characters.html">Персонажи</a></li>
+                <li><a href="theories.html">Теории</a></li>
+                <li><a href="arts.html">Арты</a></li>
+                <li><a href="reviews.html">Отзывы</a></li>
+                <li><a href="facts.html">Интересные факты</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <section class="theories">
+        <div class="container">
+            <h1>Теории по фандому</h1>
+            <div class="theory-list">
+                <div class="theory">
+                    <h3>Теория №1</h3>
+                    <img src="assets/img/photo_2022-08-07_07-29-59.jpg" alt="Теория 1">
+                    <p>Существует вероятность, что персонаж N....</p>
+                </div>
+
+                <div class="theory">
+                    <h3>Теория №2</h3>
+                    <img src="assets/img/photo_2022-08-07_07-29-59.jpg" alt="Теория 2">
+                    <p>Как символика книги намекает на истинную природу главного героя...</p>
+                </div>
+            </div>
+
+            <form class="theory-form">
+                <h2>Опубликуйте свою теорию</h2>
+                <label for="title">Название теории:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="image">Прикрепите изображение:</label>
+                <input type="file" id="image" accept="image/*">
+
+                <label for="content">Текст теории:</label>
+                <textarea id="content" name="content" rows="4" required></textarea>
+
+                <button type="submit">Опубликовать</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 VanitasNoCarte. Все права защищены.</p>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>

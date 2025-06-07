@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="menu">
+                <h2>Личный кабинет</h2>
+                <ul class="nav-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="theories.html">Теории</a></li>
+                    <li><a href="arts.html">Арты</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="facts.html">Интересные факты</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="profile">
+        <div class="profile">
+            <div class="profile-header">
+                <div class="avatar-section">
+                    <label for="avatar-upload" class="avatar-container">
+                        <img id="avatar" src="assets/img/default-avatar.jpg" alt="Avatar">
+                    </label>
+                    <input type="file" id="avatar-upload" accept="image/*" hidden>
+                </div>
+                <div class="profile-info">
+                    <input type="text" id="username" placeholder="Имя пользователя">
+                </div>
+            </div>
+
+            <div class="profile-body">
+                <section id="arts">
+                    <h2>Мои арты</h2>
+                    <div class="art-gallery"></div>
+                </section>
+
+                <section id="reviews">
+                    <h2>Мои отзывы</h2>
+                    <ul id="review-list"></ul>
+                </section>
+
+                <section id="facts">
+                    <h2>Мои факты</h2>
+                    <ul id="fact-list"></ul>
+                </section>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VanitasNoCarte. Все права защищены.</p>
+    </footer>
+
+    <script src="assets/js/profile.js"></script>
+</body>
+
+</html>
