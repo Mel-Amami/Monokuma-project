@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-/* document.addEventListener("DOMContentLoaded", function() {
+ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".like-btn").forEach(btn => {
         btn.addEventListener("click", function() {
             alert("Вы поставили лайк!");
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("Ваш отзыв на модерации.");
         });
     });
-}); */
+}); 
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector(".review-form");
     const reviewList = document.querySelector(".review-list");
@@ -491,34 +491,32 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!userData) {
         setTimeout(() => {
             if (confirm("Вам нужно зарегистрироваться, чтобы зайти в личный кабинет!\nНажмите 'OK' для перехода на главную.")) {
-                window.location.href = "index.html"; // ✅ Гарантированное перенаправление
+                window.location.href = "index.html";
             }
         }, 100);
         return;
     }
 
-    const userReviews = JSON.parse(localStorage.getItem("userReviews")) || [];
-    const reviewList = document.getElementById("review-list");
-    userReviews.forEach(review => {
-        const reviewItem = document.createElement("li");
-        reviewItem.textContent = `${review.name}: ${review.comment}`;
-        reviewList.appendChild(reviewItem);
+    const avatarUpload = document.getElementById("avatar-upload");
+    const avatarImg = document.getElementById("avatar");
+    const usernameInput = document.getElementById("username");
+
+    if (localStorage.getItem("avatar")) avatarImg.src = localStorage.getItem("avatar");
+    if (localStorage.getItem("username")) usernameInput.value = localStorage.getItem("username");
+
+    avatarUpload.addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                avatarImg.src = e.target.result;
+                localStorage.setItem("avatar", e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
     });
 
-    const userFacts = JSON.parse(localStorage.getItem("userFacts")) || [];
-    const factList = document.getElementById("fact-list");
-    userFacts.forEach(fact => {
-        const factItem = document.createElement("li");
-        factItem.textContent = fact;
-        factList.appendChild(factItem);
-    });
-
-    const userArts = JSON.parse(localStorage.getItem("userArts")) || [];
-    const artGallery = document.querySelector(".art-gallery");
-    userArts.forEach(artSrc => {
-        const img = document.createElement("img");
-        img.src = artSrc;
-        img.alt = "Загруженный арт";
-        artGallery.appendChild(img);
+    usernameInput.addEventListener("input", function() {
+        localStorage.setItem("username", this.value);
     });
 });
