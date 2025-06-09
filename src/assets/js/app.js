@@ -388,24 +388,76 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 document.addEventListener("DOMContentLoaded", function() {
     const reviewForm = document.querySelector(".review-form");
-    const reviewList = document.querySelector(".review-list");
     const factForm = document.querySelector(".fact-form");
-    const factTextInput = document.getElementById("fact-text");
-    const factsList = document.querySelector(".facts-list");
     const uploadForm = document.querySelector(".upload-form");
+    const reviewList = document.querySelector(".review-list");
+    const factsList = document.querySelector(".facts-list");
     const gallery = document.querySelector(".gallery");
 
-    // 📌 Загружаем сохранённые отзывы
-    const userReviews = JSON.parse(localStorage.getItem("userReviews")) || [];
-    userReviews.forEach(review => addReviewToPage(review));
+    function addReviewToPage(review) {
+        const reviewElement = document.createElement("div");
+        reviewElement.classList.add("review");
+        reviewElement.innerHTML = `<h3>${review.name}</h3><p>${review.comment}</p>`;
+        reviewList.appendChild(reviewElement);
+    }
 
-    // 📌 Загружаем сохранённые факты
-    const userFacts = JSON.parse(localStorage.getItem("userFacts")) || [];
-    userFacts.forEach(fact => addFactToPage(fact));
+    function addFactToPage(factText) {
+        const factElement = document.createElement("div");
+        factElement.classList.add("fact");
+        factElement.innerHTML = `<p>${factText}</p>`;
+        factsList.appendChild(factElement);
+    }
 
-    // 📌 Загружаем сохранённые арты
-    const userArts = JSON.parse(localStorage.getItem("userArts")) || [];
-    userArts.forEach(artSrc => addArtToPage(artSrc));
+    function addArtToPage(artSrc) {
+        const newArt = document.createElement("div");
+        newArt.classList.add("art");
+        newArt.innerHTML = `<img src="${artSrc}" alt="Загруженный арт" class="preview">`;
+        gallery.appendChild(newArt);
+    }
+
+    reviewForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const comment = document.getElementById("comment").value.trim();
+
+        if (!name || !comment) return alert("Заполните все поля!");
+
+        const newReview = { name, comment };
+        localStorage.setItem("userReviews", JSON.stringify([...(JSON.parse(localStorage.getItem("userReviews")) || []), newReview]));
+        addReviewToPage(newReview);
+        reviewForm.reset();
+    });
+
+    factForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const factText = document.getElementById("fact-text").value.trim();
+
+        if (!factText) return alert("Введите текст факта!");
+
+        localStorage.setItem("userFacts", JSON.stringify([...(JSON.parse(localStorage.getItem("userFacts")) || []), factText]));
+        addFactToPage(factText);
+        document.getElementById("fact-text").value = "";
+    });
+
+    uploadForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const fileInput = document.getElementById("upload-file");
+
+        if (fileInput.files.length === 0) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            localStorage.setItem("userArts", JSON.stringify([...(JSON.parse(localStorage.getItem("userArts")) || []), e.target.result]));
+            addArtToPage(e.target.result);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+        fileInput.value = "";
+    });
+
+    JSON.parse(localStorage.getItem("userReviews") || "[]").forEach(addReviewToPage);
+    JSON.parse(localStorage.getItem("userFacts") || "[]").forEach(addFactToPage);
+    JSON.parse(localStorage.getItem("userArts") || "[]").forEach(addArtToPage);
+});
 
     // 📌 Добавление нового отзыва
     reviewForm.addEventListener("submit", function(event) {
