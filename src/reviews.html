@@ -2,10 +2,10 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Отзывы</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
@@ -30,40 +30,41 @@
         <section class="reviews">
             <div class="container">
                 <h1>Отзывы пользователей</h1>
+
                 <div class="review-list">
                     <div class="review">
                         <h3>Сатору Годжо</h3>
                         <p>Отличный сайт! Нашёл много интересных теорий.</p>
                         <div class="review-actions">
-                            <button class="like-btn">👍</button>
-                            <button class="dislike-btn">👎</button>
-                            <button class="report-btn">🚨</button>
+                            <button class="like-btn" aria-label="Поставить лайк">👍</button>
+                            <button class="dislike-btn" aria-label="Поставить дизлайк">👎</button>
+                            <button class="report-btn" aria-label="Отправить на модерацию">🚨</button>
                         </div>
                     </div>
                     <div class="review">
                         <h3>Макима</h3>
                         <p>Мне нравится галерея артов, очень атмосферно!</p>
                         <div class="review-actions">
-                            <button class="like-btn">👍</button>
-                            <button class="dislike-btn">👎</button>
-                            <button class="report-btn">🚨</button>
+                            <button class="like-btn" aria-label="Поставить лайк">👍</button>
+                            <button class="dislike-btn" aria-label="Поставить дизлайк">👎</button>
+                            <button class="report-btn" aria-label="Отправить на модерацию">🚨</button>
                         </div>
                     </div>
                     <div class="review">
                         <h3>Саске</h3>
                         <p>Ресурс удобный, оформление классное.</p>
                         <div class="review-actions">
-                            <button class="like-btn">👍</button>
-                            <button class="dislike-btn">👎</button>
-                            <button class="report-btn">🚨</button>
+                            <button class="like-btn" aria-label="Поставить лайк">👍</button>
+                            <button class="dislike-btn" aria-label="Поставить дизлайк">👎</button>
+                            <button class="report-btn" aria-label="Отправить на модерацию">🚨</button>
                         </div>
                     </div>
                 </div>
 
-                <form class="review-form">
+                <form class="review-form" aria-label="Форма добавления отзыва">
                     <h2>Оставьте отзыв</h2>
                     <label for="name">Ваше имя:</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" required />
 
                     <label for="comment">Ваш отзыв:</label>
                     <textarea id="comment" name="comment" rows="4" required></textarea>
@@ -77,6 +78,62 @@
     <footer>
         <p>&copy; 2025 VanitasNoCarte. Все права защищены.</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const reviewList = document.querySelector(".review-list");
+            const reviewForm = document.querySelector(".review-form");
+
+            reviewList.addEventListener("click", (event) => {
+                const target = event.target;
+
+                if (target.classList.contains("like-btn")) {
+                    alert("Вы поставили лайк!");
+                } else if (target.classList.contains("dislike-btn")) {
+                    alert("Вы поставили дизлайк!");
+                } else if (target.classList.contains("report-btn")) {
+                    alert("Ваш отзыв отправлен на модерацию.");
+                }
+            });
+
+            reviewForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const nameInput = document.getElementById("name");
+                const commentInput = document.getElementById("comment");
+
+                const name = nameInput.value.trim();
+                const comment = commentInput.value.trim();
+
+                if (!name || !comment) {
+                    alert("Пожалуйста, заполните все поля!");
+                    return;
+                }
+
+                const newReview = document.createElement("div");
+                newReview.classList.add("review");
+                newReview.innerHTML = `
+                    <h3>${escapeHtml(name)}</h3>
+                    <p>${escapeHtml(comment)}</p>
+                    <div class="review-actions">
+                        <button class="like-btn" aria-label="Поставить лайк">👍</button>
+                        <button class="dislike-btn" aria-label="Поставить дизлайк">👎</button>
+                        <button class="report-btn" aria-label="Отправить на модерацию">🚨</button>
+                    </div>
+                `;
+
+                reviewList.appendChild(newReview);
+
+                reviewForm.reset();
+            });
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        });
+    </script>
 
 </body>
 
