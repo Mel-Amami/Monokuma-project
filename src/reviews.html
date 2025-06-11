@@ -5,7 +5,87 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Отзывы</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
+<!--     <link rel="stylesheet" href="assets/css/style.css" /> -->
+    <style>
+        .reviews {
+    padding: 50px;
+    text-align: center;
+}
+
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.review {
+    background: rgba(44, 43, 43, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.review h3 {
+    color: #00aaff;
+}
+
+.review-form {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(234, 105, 227, 0.9);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.review-form input,
+.review-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.review-form button {
+    background: #c369f7;
+    color: rgb(106, 20, 101);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.review-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.review-actions button {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.like-btn {
+    background: #4CAF50; /* Зеленый для лайков */
+    color: white;
+}
+
+.dislike-btn {
+    background: #F44336; /* Красный для дизлайков */
+    color: white;
+}
+
+.report-btn {
+    background: #FF9800; /* Оранжевый для жалоб */
+    color: white;
+}
+
+.review-actions button:hover {
+    opacity: 0.8;
+}
+    </style>
 </head>
 
 <body>
