@@ -143,10 +143,21 @@ p {
     top: 0;
     left: 0;
     width: 220px;
-    height: 100vh;
+    max-height: 90vh; /* Ограничиваем высоту */
+    overflow-y: auto; /* Разрешаем прокрутку */
     background: rgba(44, 43, 43, 0.9);
     padding: 20px;
     box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Скрываем некрасивый стандартный скролл и делаем плавный */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #c03cb7;
+    border-radius: 10px;
 }
 
 .sidebar h3 {
@@ -197,6 +208,7 @@ p {
 .sidebar ul li span {
     font-size: 1.2rem;
 }
+
 
     </style>
 </head>
