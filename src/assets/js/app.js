@@ -102,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
     checkUser();
 });
 
+
 document.addEventListener("DOMContentLoaded", function() {
     const resetForm = document.getElementById("reset-form");
     const codeSection = document.getElementById("code-section");
