@@ -239,48 +239,50 @@ document.addEventListener("DOMContentLoaded", function() {
     const theoryForm = document.querySelector(".theory-form");
     const theoryList = document.querySelector(".theory-list");
 
-    if (theoryForm && theoryList) {
-        theoryForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            const title = document.getElementById("title").value.trim();
-            const content = document.getElementById("content").value.trim();
-            const author = document.getElementById("author").value.trim() || "Аноним";
-            const imageInput = document.getElementById("image");
+   if (theoryForm && theoryList) {
+    theoryForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const title = document.getElementById("title").value.trim();
+        const content = document.getElementById("content").value.trim();
+        const imageInput = document.getElementById("image");
 
-            if (!title || !content) {
-                alert("Заполните все поля!");
+        if (!title || !content) {
+            alert("Заполните все поля!");
+            return;
+        }
+
+        // 🔹 Проверяем тип файла
+        if (imageInput.files.length > 0) {
+            const file = imageInput.files[0];
+            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert("Ошибка: можно загружать только изображения!");
                 return;
             }
 
-            const newTheory = document.createElement("div");
-            newTheory.classList.add("theory");
-            newTheory.innerHTML = `<h3>${title}</h3><p><strong>Автор:</strong> ${author}</p>`;
-
-            if (imageInput.files.length > 0) {
-                const file = imageInput.files[0];
-                const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
-
-                if (!allowedTypes.includes(file.type)) {
-                    alert("Ошибка: можно загружать только изображения!");
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
-                    newTheory.innerHTML += `<p>${content}</p>`;
-                    theoryList.appendChild(newTheory);
-                };
-                reader.readAsDataURL(file);
-            } else {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const newTheory = document.createElement("div");
+                newTheory.classList.add("theory");
+                newTheory.innerHTML = `<h3>${title}</h3>`;
+                newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
                 newTheory.innerHTML += `<p>${content}</p>`;
                 theoryList.appendChild(newTheory);
-            }
+            };
+            reader.readAsDataURL(file);
+        } else {
+            const newTheory = document.createElement("div");
+            newTheory.classList.add("theory");
+            newTheory.innerHTML = `<h3>${title}</h3>`;
+            newTheory.innerHTML += `<p>${content}</p>`;
+            theoryList.appendChild(newTheory);
+        }
 
-            theoryForm.reset();
-        });
-    }
-});
+        theoryForm.reset();
+    });
+}
+
 
 
     // --- Личный кабинет: проверка регистрации и профиль ---
