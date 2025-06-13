@@ -235,20 +235,15 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
     // --- Теории ---
-  document.addEventListener("DOMContentLoaded", function() {
-    console.log("Скрипт загружен! 🚀");
-
+ document.addEventListener("DOMContentLoaded", function() {
     const theoryForm = document.querySelector(".theory-form");
     const theoryList = document.querySelector(".theory-list");
 
     if (theoryForm && theoryList) {
         theoryForm.addEventListener("submit", function(event) {
             event.preventDefault();
-            console.log("Форма отправлена! 🔄");
-
             const title = document.getElementById("title").value.trim();
             const content = document.getElementById("content").value.trim();
-            const author = document.getElementById("author").value.trim() || "Аноним";
             const imageInput = document.getElementById("image");
 
             if (!title || !content) {
@@ -256,11 +251,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
-            console.log("Данные получены:", { title, content, author });
-
             const newTheory = document.createElement("div");
             newTheory.classList.add("theory");
-            newTheory.innerHTML = `<h3>${title}</h3><p><strong>Автор:</strong> ${author}</p>`;
+            newTheory.innerHTML = `<h3>${title}</h3>`;
 
             if (imageInput.files.length > 0) {
                 const file = imageInput.files[0];
@@ -273,7 +266,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    console.log("Файл загружен! ✅");
                     newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
                     newTheory.innerHTML += `<p>${content}</p>`;
                     theoryList.appendChild(newTheory);
@@ -282,16 +274,12 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 newTheory.innerHTML += `<p>${content}</p>`;
                 theoryList.appendChild(newTheory);
-                console.log("Теория добавлена! ✅");
             }
 
             theoryForm.reset();
         });
-    } else {
-        console.error("Ошибка: Форма или список теорий не найдены!");
     }
 });
-
 
 
 
