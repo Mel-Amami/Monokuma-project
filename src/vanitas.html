@@ -79,6 +79,46 @@ body {
     padding: 5px;
     cursor: pointer;
 }
+.characters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 50px;
+    background: linear-gradient(90deg, #21003c, #550087);
+}
+
+.character-card {
+    width: 300px;
+    background: rgba(44, 43, 43, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.character-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(190, 50, 255, 0.8);
+}
+
+.character-card h3 {
+    color: #c03cb7;
+    font-size: 1.5rem;
+}
+
+.character-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #8e44ad;
+}
+
+.character-info {
+    font-size: 1rem;
+    color: #ddd;
+}
 
     </style>
 </head>
