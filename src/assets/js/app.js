@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     checkUser();
 
-document.addEventListener("DOMContentLoaded", function() {
+/* document.addEventListener("DOMContentLoaded", function() {
     const resetForm = document.getElementById("reset-form");
     const codeSection = document.getElementById("code-section");
     const confirmReset = document.getElementById("confirm-reset");
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-
+ */
 
     // --- Отзывы ---
     const reviewForm = document.querySelector(".review-form");
