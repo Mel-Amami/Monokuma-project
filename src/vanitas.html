@@ -79,46 +79,65 @@ body {
     padding: 5px;
     cursor: pointer;
 }
-.characters {
+.character-page {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
-    padding: 50px;
+    align-items: center;
+    min-height: 100vh;
     background: linear-gradient(90deg, #21003c, #550087);
-}
-
-.character-card {
-    width: 300px;
-    background: rgba(44, 43, 43, 0.85);
-    padding: 20px;
-    border-radius: 10px;
+    color: #fff;
+    font-family: 'Russo One', sans-serif;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 50px;
 }
 
-.character-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(190, 50, 255, 0.8);
+.container {
+    max-width: 800px;
+    background: rgba(44, 43, 43, 0.85);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(190, 50, 255, 0.6);
+    animation: fadeIn 1s ease-in-out;
 }
 
-.character-card h3 {
+h1 {
+    font-size: 2.5rem;
     color: #c03cb7;
-    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
-.character-img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #8e44ad;
+img {
+    width: 250px;
+    height: auto;
+    border-radius: 10px;
+    border: 4px solid #8e44ad;
+    box-shadow: 0 0 10px rgba(200, 60, 183, 0.8);
+    transition: transform 0.3s ease;
 }
 
-.character-info {
-    font-size: 1rem;
+img:hover {
+    transform: scale(1.05);
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.6;
     color: #ddd;
+    text-align: justify;
 }
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
     </style>
 </head>
