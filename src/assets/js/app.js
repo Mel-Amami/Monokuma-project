@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // --- Регистрация и вход ---
     const registerForm = document.getElementById("register-form");
     const loginBtn = document.getElementById("login-btn");
 
@@ -23,11 +22,20 @@ document.addEventListener("DOMContentLoaded", function() {
             event.preventDefault();
             const username = document.getElementById("username").value.trim();
             const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+            // 🔹 Проверка пароля (не менее 6 символов, без пробелов)
+            password = password.replace(/\s/g, ""); // Удаляем пробелы
+            if (password.length < 6) {
+                alert("Ошибка: Пароль должен содержать минимум 6 символов!");
+                return;
+            }
+
             if (!username || !email || !password) {
                 alert("Заполните все поля!");
                 return;
             }
+
             localStorage.setItem("user", JSON.stringify({ username, email, password }));
             alert(`Регистрация успешна! Добро пожаловать, ${username}.`);
             location.reload();
@@ -37,15 +45,16 @@ document.addEventListener("DOMContentLoaded", function() {
     if (loginBtn) {
         loginBtn.addEventListener("click", function() {
             const userData = JSON.parse(localStorage.getItem("user"));
-            if (userData) {
-                window.location.href = "personal.html";
-            } else {
-                alert("Нет сохранённого аккаунта. Зарегистрируйтесь!");
+            if (!userData) {
+                alert("Нет аккаунта. Сначала зарегистрируйтесь!");
+                return;
             }
+            window.location.href = "personal.html";
         });
     }
 
     checkUser();
+});
 
     // --- Отзывы ---
     const reviewForm = document.querySelector(".review-form");
