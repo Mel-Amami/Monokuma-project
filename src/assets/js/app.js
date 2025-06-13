@@ -251,12 +251,4 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
-document.addEventListener("DOMContentLoaded", function() {
-    const sidebar = document.querySelector(".sidebar");
 
-    if (sidebar) {
-        setTimeout(() => {
-            sidebar.classList.add("show"); // Запускаем анимацию после загрузки
-        }, 300); // Небольшая задержка для плавного эффекта
-    }
-});
