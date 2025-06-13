@@ -154,27 +154,35 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
     if (uploadForm && gallery) {
-        uploadForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            const fileInput = document.getElementById("upload-file");
-            if (fileInput.files.length === 0) return;
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const newArt = document.createElement("div");
-                newArt.classList.add("art");
-                newArt.innerHTML = `
-                    <img src="${e.target.result}" alt="Ваш арт" class="preview">
-                    <div class="art-actions">
-                        <button class="like-btn">👍</button>
-                    </div>
-                `;
-                gallery.appendChild(newArt);
-            };
-            reader.readAsDataURL(file);
-            fileInput.value = "";
-        });
-    }
+    uploadForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const fileInput = document.getElementById("upload-file");
+        if (fileInput.files.length === 0) return;
+        const file = fileInput.files[0];
+
+        // 🔹 Проверяем тип файла
+        const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+        if (!allowedTypes.includes(file.type)) {
+            alert("Ошибка: можно загружать только изображения!");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const newArt = document.createElement("div");
+            newArt.classList.add("art");
+            newArt.innerHTML = `
+                <img src="${e.target.result}" alt="Ваш арт" class="preview">
+                <div class="art-actions">
+                    <button class="like-btn">👍</button>
+                </div>
+            `;
+            gallery.appendChild(newArt);
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = "";
+    });
+}
 
     // --- Теории ---
     const theoryList = document.querySelector(".theory-list");
