@@ -1,11 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // --- Регистрация и вход ---
     const registerForm = document.getElementById("register-form");
     const loginBtn = document.getElementById("login-btn");
-    const resetForm = document.getElementById("reset-form");
-    const codeSection = document.getElementById("code-section");
-    const confirmReset = document.getElementById("confirm-reset");
-
-    let resetCode = "";
 
     function checkUser() {
         const userData = JSON.parse(localStorage.getItem("user"));
@@ -27,20 +23,11 @@ document.addEventListener("DOMContentLoaded", function() {
             event.preventDefault();
             const username = document.getElementById("username").value.trim();
             const email = document.getElementById("email").value.trim();
-            let password = document.getElementById("password").value.trim();
-
-            // 🔹 Проверка пароля (не менее 6 символов, без пробелов)
-            password = password.replace(/\s/g, "");
-            if (password.length < 6) {
-                alert("Ошибка: Пароль должен содержать минимум 6 символов!");
-                return;
-            }
-
+            const password = document.getElementById("password").value.trim();
             if (!username || !email || !password) {
                 alert("Заполните все поля!");
                 return;
             }
-
             localStorage.setItem("user", JSON.stringify({ username, email, password }));
             alert(`Регистрация успешна! Добро пожаловать, ${username}.`);
             location.reload();
@@ -50,58 +37,15 @@ document.addEventListener("DOMContentLoaded", function() {
     if (loginBtn) {
         loginBtn.addEventListener("click", function() {
             const userData = JSON.parse(localStorage.getItem("user"));
-            if (!userData) {
-                alert("Нет аккаунта. Сначала зарегистрируйтесь!");
-                return;
+            if (userData) {
+                window.location.href = "personal.html";
+            } else {
+                alert("Нет сохранённого аккаунта. Зарегистрируйтесь!");
             }
-            window.location.href = "personal.html";
-        });
-    }
-
-    if (resetForm) {
-        resetForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            const email = document.getElementById("reset-email").value.trim();
-            const userData = JSON.parse(localStorage.getItem("user"));
-
-            if (!userData || userData.email !== email) {
-                alert("Ошибка: Этот email не зарегистрирован!");
-                return;
-            }
-
-            // 🔹 Генерируем код восстановления
-            resetCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-            alert(`Ваш код восстановления: ${resetCode}`);
-            codeSection.style.display = "block";
-        });
-    }
-
-    if (confirmReset) {
-        confirmReset.addEventListener("click", function() {
-            const enteredCode = document.getElementById("reset-code").value.trim();
-            const newPassword = document.getElementById("new-password").value.trim();
-
-            if (enteredCode !== resetCode) {
-                alert("Ошибка: Неверный код восстановления!");
-                return;
-            }
-
-            if (newPassword.length < 6) {
-                alert("Пароль должен содержать минимум 6 символов!");
-                return;
-            }
-
-            let userData = JSON.parse(localStorage.getItem("user"));
-            userData.password = newPassword;
-            localStorage.setItem("user", JSON.stringify(userData));
-            alert("Пароль успешно изменён!");
-            window.location.href = "/login.html";
         });
     }
 
     checkUser();
-});
-
 
 document.addEventListener("DOMContentLoaded", function() {
     const resetForm = document.getElementById("reset-form");
