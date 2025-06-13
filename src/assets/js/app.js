@@ -236,52 +236,62 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- Теории ---
   document.addEventListener("DOMContentLoaded", function() {
+    console.log("Скрипт загружен! 🚀");
+
     const theoryForm = document.querySelector(".theory-form");
     const theoryList = document.querySelector(".theory-list");
 
-   if (theoryForm && theoryList) {
-    theoryForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        const title = document.getElementById("title").value.trim();
-        const content = document.getElementById("content").value.trim();
-        const imageInput = document.getElementById("image");
+    if (theoryForm && theoryList) {
+        theoryForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            console.log("Форма отправлена! 🔄");
 
-        if (!title || !content) {
-            alert("Заполните все поля!");
-            return;
-        }
+            const title = document.getElementById("title").value.trim();
+            const content = document.getElementById("content").value.trim();
+            const author = document.getElementById("author").value.trim() || "Аноним";
+            const imageInput = document.getElementById("image");
 
-        // 🔹 Проверяем тип файла
-        if (imageInput.files.length > 0) {
-            const file = imageInput.files[0];
-            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
-
-            if (!allowedTypes.includes(file.type)) {
-                alert("Ошибка: можно загружать только изображения!");
+            if (!title || !content) {
+                alert("Заполните все поля!");
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const newTheory = document.createElement("div");
-                newTheory.classList.add("theory");
-                newTheory.innerHTML = `<h3>${title}</h3>`;
-                newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
-                newTheory.innerHTML += `<p>${content}</p>`;
-                theoryList.appendChild(newTheory);
-            };
-            reader.readAsDataURL(file);
-        } else {
+            console.log("Данные получены:", { title, content, author });
+
             const newTheory = document.createElement("div");
             newTheory.classList.add("theory");
-            newTheory.innerHTML = `<h3>${title}</h3>`;
-            newTheory.innerHTML += `<p>${content}</p>`;
-            theoryList.appendChild(newTheory);
-        }
+            newTheory.innerHTML = `<h3>${title}</h3><p><strong>Автор:</strong> ${author}</p>`;
 
-        theoryForm.reset();
-    });
-}
+            if (imageInput.files.length > 0) {
+                const file = imageInput.files[0];
+                const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+
+                if (!allowedTypes.includes(file.type)) {
+                    alert("Ошибка: можно загружать только изображения!");
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log("Файл загружен! ✅");
+                    newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
+                    newTheory.innerHTML += `<p>${content}</p>`;
+                    theoryList.appendChild(newTheory);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                newTheory.innerHTML += `<p>${content}</p>`;
+                theoryList.appendChild(newTheory);
+                console.log("Теория добавлена! ✅");
+            }
+
+            theoryForm.reset();
+        });
+    } else {
+        console.error("Ошибка: Форма или список теорий не найдены!");
+    }
+});
+
 
 
 
