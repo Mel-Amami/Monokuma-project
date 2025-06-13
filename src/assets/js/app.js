@@ -55,6 +55,55 @@ document.addEventListener("DOMContentLoaded", function() {
 
     checkUser();
 });
+document.addEventListener("DOMContentLoaded", function() {
+    const resetForm = document.getElementById("reset-form");
+    const codeSection = document.getElementById("code-section");
+    const confirmReset = document.getElementById("confirm-reset");
+
+    let resetCode = "";
+
+    if (resetForm) {
+        resetForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const email = document.getElementById("reset-email").value.trim();
+            const userData = JSON.parse(localStorage.getItem("user"));
+
+            if (!userData || userData.email !== email) {
+                alert("Ошибка: Этот email не зарегистрирован!");
+                return;
+            }
+
+            // 🔹 Генерируем код
+            resetCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+            alert(`Ваш код восстановления: ${resetCode}`); // Здесь можно заменить на реальную отправку email
+            codeSection.style.display = "block";
+        });
+    }
+
+    if (confirmReset) {
+        confirmReset.addEventListener("click", function() {
+            const enteredCode = document.getElementById("reset-code").value.trim();
+            const newPassword = document.getElementById("new-password").value.trim();
+
+            if (enteredCode !== resetCode) {
+                alert("Ошибка: Неверный код восстановления!");
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                alert("Пароль должен содержать минимум 6 символов!");
+                return;
+            }
+
+            let userData = JSON.parse(localStorage.getItem("user"));
+            userData.password = newPassword;
+            localStorage.setItem("user", JSON.stringify(userData));
+            alert("Пароль успешно изменён!");
+            window.location.href = "/login.html";
+        });
+    }
+});
+
 
     // --- Отзывы ---
     const reviewForm = document.querySelector(".review-form");
