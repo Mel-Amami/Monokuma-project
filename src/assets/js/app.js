@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     // --- Личный кабинет: проверка регистрации и профиль ---
-    if (window.location.pathname.includes("personal.html")) {
+  /*   if (window.location.pathname.includes("personal.html")) {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (!userData) {
             const redirect = confirm("Вам нужно зарегистрироваться, чтобы зайти в личный кабинет! Нажмите 'ОК' для перехода на главную.");
@@ -320,3 +320,4 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+ */
