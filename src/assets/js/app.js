@@ -235,9 +235,8 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
     // --- Теории ---
- document.addEventListener("DOMContentLoaded", function() {
+ const theoryList = document.querySelector(".theory-list");
     const theoryForm = document.querySelector(".theory-form");
-    const theoryList = document.querySelector(".theory-list");
 
    if (theoryForm && theoryList) {
     theoryForm.addEventListener("submit", function(event) {
