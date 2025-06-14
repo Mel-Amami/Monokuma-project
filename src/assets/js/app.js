@@ -235,57 +235,89 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
     // --- Теории ---
- const theoryList = document.querySelector(".theory-list");
+ document.addEventListener("DOMContentLoaded", function() {
+    const theoryList = document.querySelector(".theory-list");
     const theoryForm = document.querySelector(".theory-form");
 
-   if (theoryForm && theoryList) {
-    theoryForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        const title = document.getElementById("title").value.trim();
-        const content = document.getElementById("content").value.trim();
-        const imageInput = document.getElementById("image");
+    // Функция для сохранения теории в localStorage
+    function saveTheory(theory) {
+        let theories = JSON.parse(localStorage.getItem("theories")) || [];
+        theories.push(theory);
+        localStorage.setItem("theories", JSON.stringify(theories));
+    }
 
-        if (!title || !content) {
-            alert("Заполните все поля!");
-            return;
+    // Функция для отображения теории на странице
+    function renderTheory({ title, content, image }) {
+        const newTheory = document.createElement("div");
+        newTheory.classList.add("theory");
+        newTheory.innerHTML = `<h3>${escapeHtml(title)}</h3>`;
+        if (image) {
+            newTheory.innerHTML += `<img src="${image}" alt="${escapeHtml(title)}">`;
         }
+        newTheory.innerHTML += `<p>${escapeHtml(content)}</p>`;
+        theoryList.appendChild(newTheory);
+    }
 
-        // 🔹 Проверяем тип файла
-        if (imageInput.files.length > 0) {
-            const file = imageInput.files[0];
-            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+    // Загрузка сохранённых теорий при загрузке страницы
+    if (theoryList) {
+        const savedTheories = JSON.parse(localStorage.getItem("theories")) || [];
+        savedTheories.forEach(renderTheory);
+    }
 
-            if (!allowedTypes.includes(file.type)) {
-                alert("Ошибка: можно загружать только изображения!");
+    // Обработка отправки формы добавления теории
+    if (theoryForm && theoryList) {
+        theoryForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const titleInput = document.getElementById("title");
+            const contentInput = document.getElementById("content");
+            const imageInput = document.getElementById("image");
+
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+
+            if (!title || !content) {
+                alert("Заполните все поля!");
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const newTheory = document.createElement("div");
-                newTheory.classList.add("theory");
-                newTheory.innerHTML = `<h3>${title}</h3>`;
-                newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
-                newTheory.innerHTML += `<p>${content}</p>`;
-                theoryList.appendChild(newTheory);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            const newTheory = document.createElement("div");
-            newTheory.classList.add("theory");
-            newTheory.innerHTML = `<h3>${title}</h3>`;
-            newTheory.innerHTML += `<p>${content}</p>`;
-            theoryList.appendChild(newTheory);
-        }
+            if (imageInput.files.length > 0) {
+                const file = imageInput.files[0];
+                const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
 
-        theoryForm.reset();
-    });
-}
+                if (!allowedTypes.includes(file.type)) {
+                    alert("Ошибка: можно загружать только изображения!");
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+                    renderTheory({ title, content, image: imageData });
+                    saveTheory({ title, content, image: imageData });
+                };
+                reader.readAsDataURL(file);
+            } else {
+                renderTheory({ title, content, image: null });
+                saveTheory({ title, content, image: null });
+            }
+
+            theoryForm.reset();
+        });
+    }
+
+    // Функция для защиты от XSS (экранирование HTML)
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+});
 
 
 
     // --- Личный кабинет: проверка регистрации и профиль ---
-    document.addEventListener("DOMContentLoaded", function() {
+  /*   document.addEventListener("DOMContentLoaded", function() {
     const savedName = localStorage.getItem("username");
     const savedAvatar = localStorage.getItem("avatar");
 
@@ -323,8 +355,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-
-  /*   if (window.location.pathname.includes("personal.html")) {
+ */
+    if (window.location.pathname.includes("personal.html")) {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (!userData) {
             const redirect = confirm("Вам нужно зарегистрироваться, чтобы зайти в личный кабинет! Нажмите 'ОК' для перехода на главную.");
@@ -359,4 +391,4 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
- */
+
