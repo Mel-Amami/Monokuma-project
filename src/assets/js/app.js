@@ -238,33 +238,49 @@ document.addEventListener("DOMContentLoaded", function() {
  const theoryList = document.querySelector(".theory-list");
     const theoryForm = document.querySelector(".theory-form");
     if (theoryForm && theoryList) {
-        theoryForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            const title = document.getElementById("title").value.trim();
-            const content = document.getElementById("content").value.trim();
-            const imageInput = document.getElementById("image");
-            if (!title || !content) {
-                alert("Заполните все поля!");
+    theoryForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const title = document.getElementById("title").value.trim();
+        const content = document.getElementById("content").value.trim();
+        const imageInput = document.getElementById("image");
+
+        if (!title || !content) {
+            alert("Заполните все поля!");
+            return;
+        }
+
+        // 🔹 Проверяем тип файла
+        if (imageInput.files.length > 0) {
+            const file = imageInput.files[0];
+            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert("Ошибка: можно загружать только изображения!");
                 return;
             }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const newTheory = document.createElement("div");
+                newTheory.classList.add("theory");
+                newTheory.innerHTML = `<h3>${title}</h3>`;
+                newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
+                newTheory.innerHTML += `<p>${content}</p>`;
+                theoryList.appendChild(newTheory);
+            };
+            reader.readAsDataURL(file);
+        } else {
             const newTheory = document.createElement("div");
             newTheory.classList.add("theory");
             newTheory.innerHTML = `<h3>${title}</h3>`;
-            if (imageInput.files.length > 0) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
-                    newTheory.innerHTML += `<p>${content}</p>`;
-                    theoryList.appendChild(newTheory);
-                };
-                reader.readAsDataURL(imageInput.files[0]);
-            } else {
-                newTheory.innerHTML += `<p>${content}</p>`;
-                theoryList.appendChild(newTheory);
-            }
-            theoryForm.reset();
-        });
-    }
+            newTheory.innerHTML += `<p>${content}</p>`;
+            theoryList.appendChild(newTheory);
+        }
+
+        theoryForm.reset();
+    });
+}
+
 
 
     // --- Личный кабинет: проверка регистрации и профиль ---
@@ -307,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
  */
-    if (window.location.pathname.includes("personal.html")) {
+   if (window.location.pathname.includes("personal.html")) {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (!userData) {
             const redirect = confirm("Вам нужно зарегистрироваться, чтобы зайти в личный кабинет! Нажмите 'ОК' для перехода на главную.");
@@ -341,5 +357,3 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
-
-
