@@ -239,14 +239,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const theoryList = document.querySelector(".theory-list");
     const theoryForm = document.querySelector(".theory-form");
 
-    // Функция для сохранения теории в localStorage
     function saveTheory(theory) {
         let theories = JSON.parse(localStorage.getItem("theories")) || [];
         theories.push(theory);
         localStorage.setItem("theories", JSON.stringify(theories));
     }
 
-    // Функция для отображения теории на странице
     function renderTheory({ title, content, image }) {
         const newTheory = document.createElement("div");
         newTheory.classList.add("theory");
@@ -258,13 +256,11 @@ document.addEventListener("DOMContentLoaded", function() {
         theoryList.appendChild(newTheory);
     }
 
-    // Загрузка сохранённых теорий при загрузке страницы
     if (theoryList) {
         const savedTheories = JSON.parse(localStorage.getItem("theories")) || [];
         savedTheories.forEach(renderTheory);
     }
 
-    // Обработка отправки формы добавления теории
     if (theoryForm && theoryList) {
         theoryForm.addEventListener("submit", function(event) {
             event.preventDefault();
@@ -306,13 +302,13 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Функция для защиты от XSS (экранирование HTML)
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 });
+
 
 
 
