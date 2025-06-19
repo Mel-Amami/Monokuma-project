@@ -60,6 +60,11 @@ body {
     font-size: 16px;
 }
 
+.nav-links li a.active {
+    border-bottom: 3px solid #c03cb7;
+    color: #c03cb7;
+}
+
 .search-box {
     display: flex;
     align-items: center;
@@ -107,6 +112,10 @@ body {
     border-radius: 8px;
 }
 
+.characters .container {
+    margin-top: 30px;
+}
+
 </style>
 </head>
 
@@ -123,7 +132,12 @@ body {
                     <li><a href="arts.html">Арты</a></li>
                     <li><a href="reviews.html">Отзывы</a></li>
                     <li><a href="facts.html">Интересные факты</a></li>
+                    <li><a href="personal.html">Личный кабинет</a></li>
                 </ul>
+                <div class="search-box">
+                    <input type="text" placeholder="Поиск...">
+                    <button type="submit">🔍</button>
+                </div>
             </div>
         </nav>
     </header>
@@ -131,7 +145,7 @@ body {
     <main>
         <section class="characters">
             <div class="container">
-                <h1>Персонажи фандома</h1>
+                <h1></h1>
                 <div class="character-list">
                     <div class="character">
                         <a href="vanitas.html">
@@ -242,6 +256,35 @@ body {
     </footer>
 
     <script src="assets/js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Подсветка активной ссылки
+            const links = document.querySelectorAll('.nav-links li a');
+            const current = window.location.pathname.split('/').pop();
+            links.forEach(link => {
+                if (link.getAttribute('href') === current) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Поиск по персонажам
+            const searchInput = document.querySelector('.search-box input');
+            const characterCards = document.querySelectorAll('.character-list .character');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const value = this.value.trim().toLowerCase();
+                    characterCards.forEach(card => {
+                        const name = card.querySelector('h3').textContent.toLowerCase();
+                        if (name.includes(value)) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
