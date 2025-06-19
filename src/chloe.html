@@ -80,54 +80,27 @@
             animation: fadeIn 1s ease-in-out;
         }
 
-        /* Стили для бургер-меню персонажей */
-        .characters-burger {
-            position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1001;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            background: rgba(200, 60, 183, 0.7);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .characters-burger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: #fff;
-            margin: 3px 0;
-            border-radius: 2px;
-            transition: 0.3s;
-        }
-
-        /* Сайдбар с персонажами */
+        /* Сайдбар с персонажами (десктопная версия) */
         .sidebar {
             position: fixed;
-            top: 0;
+            top: 70px; /* Под шапкой */
             left: 0;
             width: 220px;
-            height: 100vh;
-            max-height: 100vh;
+            height: calc(100vh - 70px);
             overflow-y: auto;
-            background: rgba(44, 43, 43, 0.95);
+            background: rgba(44, 43, 43, 0.9);
             padding: 20px;
             box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.5);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
+            z-index: 999;
         }
 
-        .sidebar.open {
-            transform: translateX(0);
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #c03cb7;
+            border-radius: 10px;
         }
 
         .sidebar h3 {
@@ -181,6 +154,53 @@
             font-size: 1rem;
         }
 
+        /* Бургер для списка персонажей (мобильная версия) */
+        .characters-burger {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            background: rgba(200, 60, 183, 0.7);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .characters-burger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 3px 0;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* Мобильная версия сайдбара */
+        .sidebar.mobile-sidebar {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            height: 100vh;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            padding-top: 70px;
+        }
+
+        .sidebar.mobile-sidebar.open {
+            transform: translateX(0);
+        }
+
         /* Бургер для основного меню */
         .burger {
             display: none;
@@ -206,6 +226,7 @@
 
         /* Адаптация под мобильные устройства */
         @media (max-width: 900px) {
+            /* Основное меню */
             .navbar {
                 flex-direction: column;
                 align-items: flex-start;
@@ -253,7 +274,16 @@
                 display: block;
             }
 
-            /* Показываем бургер для персонажей на мобильных */
+            /* Сайдбар с персонажами */
+            .sidebar {
+                display: none; /* Скрываем обычный сайдбар */
+            }
+
+            .sidebar.mobile-sidebar {
+                display: block; /* Показываем мобильную версию */
+            }
+
+            /* Бургер для персонажей */
             .characters-burger {
                 display: flex;
             }
@@ -294,17 +324,17 @@
                 height: 2px;
             }
 
-            .sidebar {
+            .sidebar.mobile-sidebar {
                 width: 180px;
                 padding: 15px;
             }
 
-            .sidebar ul li img {
+            .sidebar.mobile-sidebar ul li img {
                 width: 30px;
                 height: 30px;
             }
 
-            .sidebar ul li span {
+            .sidebar.mobile-sidebar ul li span {
                 font-size: 0.9rem;
             }
         }
@@ -329,15 +359,36 @@
     </style>
 </head>
 <body>
-<!-- Бургер для открытия списка персонажей -->
+<!-- Бургер для открытия списка персонажей (только на мобильных) -->
 <div class="characters-burger" id="characters-burger">
     <span></span>
     <span></span>
     <span></span>
 </div>
 
-<!-- Сайдбар с персонажами -->
-<div class="sidebar" id="characters-sidebar">
+<!-- Сайдбар с персонажами (десктопная версия) -->
+<div class="sidebar">
+    <h3>Персонажи</h3>
+    <ul>
+        <li><a href="vanitas.html"><img src="assets/img/ванитвс.jpg" alt="Ванитас"><span>Ванитас</span></a></li>
+        <li><a href="noe.html"><img src="assets/img/ной.jpg" alt="Ной"><span>Ной</span></a></li>
+        <li><a href="jeanne.html"><img src="assets/img/жанна.jpg" alt="Жанна"><span>Жанна</span></a></li>
+        <li><a href="astolfo.html"><img src="assets/img/аст.jpg" alt="Астольфо"><span>Астольфо</span></a></li>
+        <li><a href="roland.html"><img src="assets/img/роналд.jpg" alt="Роланд"><span>Роланд</span></a></li>
+        <li><a href="amelia.html"><img src="assets/img/амас.jpg" alt="Амелия"><span>Амелия</span></a></li>
+        <li><a href="misha.html"><img src="assets/img/миша.jpg" alt="Михаил"><span>Михаил</span></a></li>
+        <li><a href="louis.html"><img src="assets/img/луи.jpg" alt="Луи"><span>Луи</span></a></li>
+        <li><a href="chloe.html"><img src="assets/img/хлоя.jpg" alt="Хлоя"><span>Хлоя</span></a></li>
+        <li><a href="rutven.html"><img src="assets/img/рутвен.jpg" alt="Рутвен"><span>Рутвен</span></a></li>
+        <li><a href="domi.html"><img src="assets/img/доми.jpg" alt="Доми"><span>Доми</span></a></li>
+        <li><a href="charles.html"><img src="assets/img/шарл.jpg" alt="Шарлатан"><span>Шарлатан</span></a></li>
+        <li><a href="blank.html"><img src="assets/img/бкзеб.jpg" alt="Безликий"><span>Безликий</span></a></li>
+        <li><a href="veronica.html"><img src="assets/img/вер.jpg" alt="Вероника"><span>Вероника</span></a></li>
+    </ul>
+</div>
+
+<!-- Сайдбар с персонажами (мобильная версия - скрыта по умолчанию) -->
+<div class="sidebar mobile-sidebar" id="mobile-sidebar">
     <h3>Персонажи</h3>
     <ul>
         <li><a href="vanitas.html"><img src="assets/img/ванитвс.jpg" alt="Ванитас"><span>Ванитас</span></a></li>
@@ -453,20 +504,20 @@
         }
     });
     
-    // Бургер-меню для списка персонажей
+    // Бургер-меню для списка персонажей (только на мобильных)
     const charactersBurger = document.getElementById('characters-burger');
-    const charactersSidebar = document.getElementById('characters-sidebar');
+    const mobileSidebar = document.getElementById('mobile-sidebar');
     
     charactersBurger.addEventListener('click', function() {
-        charactersSidebar.classList.toggle('open');
+        mobileSidebar.classList.toggle('open');
     });
     
-    // Закрытие сайдбара при клике на ссылку
-    const characterLinks = document.querySelectorAll('.sidebar ul li a');
+    // Закрытие мобильного сайдбара при клике на ссылку
+    const characterLinks = document.querySelectorAll('.mobile-sidebar ul li a');
     characterLinks.forEach(link => {
         link.addEventListener('click', function() {
             if (window.innerWidth <= 900) {
-                charactersSidebar.classList.remove('open');
+                mobileSidebar.classList.remove('open');
             }
         });
     });
