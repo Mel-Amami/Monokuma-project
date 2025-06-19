@@ -364,7 +364,10 @@ footer {
                     <input type="email" id="email" name="email" required>
 
                     <label for="password">Пароль</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" 
+                           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,20}$" 
+                           title="Пароль должен содержать минимум 8 символов, максимум 20, включая буквы и цифры" 
+                           required>
 
                     <button type="submit">Зарегистрироваться</button>
                     <button id="login-btn">Вход</button> 
@@ -384,40 +387,166 @@ footer {
 
     <script src="assets/js/app.js"></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const links = document.querySelectorAll('.nav-links li a');
-        const current = window.location.pathname.split('/').pop();
-        links.forEach(link => {
-            if (link.getAttribute('href') === current) {
-                link.classList.add('active');
-            }
-        });
-
-        // Бургер-меню
+        // Бургер-меню для мобильной навигации
         const burger = document.getElementById('burger-menu');
         const navLinks = document.querySelector('.nav-links');
+        const burgerVeil = document.getElementById('burger-veil');
+        
         function checkWidth() {
-            if (window.innerWidth <= 900) {
-                burger.style.display = 'flex';
-                navLinks.classList.remove('open');
-            } else {
-                burger.style.display = 'none';
-                navLinks.classList.remove('open');
-            }
+          if (window.innerWidth <= 900) {
+            burger.style.display = 'flex';
+            navLinks.classList.remove('open');
+            burgerVeil.classList.remove('active');
+          } else {
+            burger.style.display = 'none';
+            navLinks.classList.remove('open');
+            burgerVeil.classList.remove('active');
+          }
         }
+        
         checkWidth();
         window.addEventListener('resize', checkWidth);
+        
         burger.addEventListener('click', function() {
-            navLinks.classList.toggle('open');
+          navLinks.classList.toggle('open');
+          burgerVeil.classList.toggle('active');
         });
-        // Закрытие меню по клику на ссылку (мобайл)
+        
+        burgerVeil.addEventListener('click', function() {
+          navLinks.classList.remove('open');
+          burgerVeil.classList.remove('active');
+        });
+        
         navLinks.addEventListener('click', function(e) {
-            if (e.target.tagName === 'A' && window.innerWidth <= 900) {
-                navLinks.classList.remove('open');
-            }
+          if (e.target.tagName === 'A' && window.innerWidth <= 900) {
+            navLinks.classList.remove('open');
+            burgerVeil.classList.remove('active');
+          }
         });
-    });
-    </script>
+        
+        // Валидация пароля
+        function validatePassword(password) {
+          const minLength = 8;
+          const maxLength = 20;
+          const hasLetter = /[A-Za-z]/.test(password);
+          const hasDigit = /\d/.test(password);
+          
+          if (password.length < minLength) {
+            return `Пароль должен содержать минимум ${minLength} символов`;
+          }
+          
+          if (password.length > maxLength) {
+            return `Пароль должен содержать максимум ${maxLength} символов`;
+          }
+          
+          if (!hasLetter) {
+            return 'Пароль должен содержать хотя бы одну букву';
+          }
+          
+          if (!hasDigit) {
+            return 'Пароль должен содержать хотя бы одну цифру';
+          }
+          
+          return null; // Пароль валиден
+        }
+        
+        // Обработка кнопки входа
+        document.getElementById('login-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const username = document.getElementById('username').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value;
+          
+          // Проверяем, что все поля заполнены
+          if (!username || !email || !password) {
+            alert('Пожалуйста, заполните все поля для входа');
+            return;
+          }
+          
+          // Получаем зарегистрированных пользователей из localStorage
+          const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+          
+          // Ищем пользователя с такими данными
+          const user = registeredUsers.find(u => 
+            u.username === username && 
+            u.email === email && 
+            u.password === password
+          );
+          
+          if (user) {
+            // Пользователь найден - сохраняем данные для входа и переходим в личный кабинет
+            localStorage.setItem('currentUser', JSON.stringify({
+              username: user.username,
+              email: user.email
+            }));
+            alert('Вход выполнен успешно! Переходим в личный кабинет...');
+            window.location.href = 'src/personal.html';
+          } else {
+            alert('Ошибка! Пользователь с такими данными не найден. Проверьте правильность введенных данных.');
+          }
+        });
+        
+        // Обработка формы регистрации
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const username = document.getElementById('username').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value;
+          
+          // Проверка имени пользователя
+          if (username.length < 3) {
+            alert('Имя пользователя должно содержать минимум 3 символа');
+            return;
+          }
+          
+          // Проверка email
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            alert('Введите корректный email адрес');
+            return;
+          }
+          
+          // Проверка пароля
+          const passwordError = validatePassword(password);
+          if (passwordError) {
+            alert(passwordError);
+            return;
+          }
+          
+          // Получаем существующих пользователей
+          const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+          
+          // Проверяем, не зарегистрирован ли уже пользователь с таким именем или email
+          const existingUser = registeredUsers.find(u => 
+            u.username === username || u.email === email
+          );
+          
+          if (existingUser) {
+            if (existingUser.username === username) {
+              alert('Пользователь с таким именем уже зарегистрирован');
+            } else {
+              alert('Пользователь с таким email уже зарегистрирован');
+            }
+            return;
+          }
+          
+          // Добавляем нового пользователя
+          registeredUsers.push({
+            username: username,
+            email: email,
+            password: password,
+            registrationDate: new Date().toISOString()
+          });
+          
+          // Сохраняем в localStorage
+          localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+          
+          alert('Регистрация успешна! Теперь вы можете войти в систему.');
+          this.reset();
+        });
+        </script>
 </body>
 
 </html>
