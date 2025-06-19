@@ -45,12 +45,14 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+    width: 100%;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
     gap: 15px;
+    transition: all 0.3s;
 }
 
 .nav-links li a {
@@ -70,7 +72,7 @@ body {
     align-items: center;
     gap: 5px;
     position: absolute;
-    right: 20px; /* Отодвигаем в правый угол */
+    right: 20px;
 }
 
 .search-box input {
@@ -85,6 +87,29 @@ body {
     padding: 5px;
     cursor: pointer;
 }
+
+.burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 1100;
+    margin-left: 10px;
+}
+
+.burger span {
+    display: block;
+    width: 28px;
+    height: 4px;
+    background: #fff;
+    margin: 4px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
 .hero {
     display: flex;
     flex-direction: column;
@@ -132,19 +157,68 @@ footer {
 }
 
 /* Адаптивность */
-@media screen and (max-width: 768px) {
-    .sidebar {
+@media (max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 10px 0 10px;
+        height: auto;
+    }
+    .menu {
         width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100vw;
+        background: linear-gradient(90deg, #6A00F4, #8E44AD);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 1001;
+        padding: 10px 0;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .nav-links.open {
+        display: flex;
+    }
+    .burger {
+        display: flex;
+    }
+    .search-box {
         position: static;
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+    .nav-links li {
+        margin: 10px 0;
         text-align: center;
     }
-
-    .hero {
-        padding: 40px;
+    .nav-links li a {
+        font-size: 1.2rem;
+        padding: 10px 0;
+        display: block;
     }
+}
 
-    h1 {
-        font-size: 1.5rem;
+@media (max-width: 600px) {
+    .navbar {
+        padding: 8px 4px 0 4px;
+    }
+    .menu h2 {
+        font-size: 1.1rem;
+    }
+    .burger {
+        width: 32px;
+        height: 32px;
+    }
+    .nav-links {
+        font-size: 1.1rem;
     }
 }
 
@@ -208,7 +282,12 @@ footer {
     <header>
     <nav class="navbar">
         <div class="menu">
-            <h2 href="index.html">Мемуары Ванитаса</h2>
+            <h2>Мемуары Ванитаса</h2>
+            <div class="burger" id="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-links">
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="characters.html">Персонажи</a></li>
@@ -217,9 +296,7 @@ footer {
                 <li><a href="reviews.html">Отзывы</a></li>
                 <li><a href="facts.html">Интересные факты</a></li>
                 <li><a href="personal.html">Личный кабинет</a></li>
-
             </ul>
-            
         </div>
     </nav>
 </header>
@@ -269,6 +346,7 @@ footer {
         </section>
 
 
+
        
 
     </main>
@@ -285,6 +363,30 @@ footer {
         links.forEach(link => {
             if (link.getAttribute('href') === current) {
                 link.classList.add('active');
+            }
+        });
+
+        // Бургер-меню
+        const burger = document.getElementById('burger-menu');
+        const navLinks = document.querySelector('.nav-links');
+        function checkWidth() {
+            if (window.innerWidth <= 900) {
+                burger.style.display = 'flex';
+                navLinks.classList.remove('open');
+            } else {
+                burger.style.display = 'none';
+                navLinks.classList.remove('open');
+            }
+        }
+        checkWidth();
+        window.addEventListener('resize', checkWidth);
+        burger.addEventListener('click', function() {
+            navLinks.classList.toggle('open');
+        });
+        // Закрытие меню по клику на ссылку (мобайл)
+        navLinks.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A' && window.innerWidth <= 900) {
+                navLinks.classList.remove('open');
             }
         });
     });
