@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VanitasNoCarte</title>
-   <!--  <link rel="stylesheet" href="src/assets/sass/style.scss"> -->
-    <style>
-        * {
+<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+ <style>
+     * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
+   }
 
 body {
     font-family: 'Russo One', sans-serif;
@@ -58,6 +58,11 @@ body {
     color: rgba(42, 23, 41, 0.682);
     font-weight: bold;
     font-size: 16px;
+}
+
+.nav-links li a.active {
+    border-bottom: 3px solid #c03cb7;
+    color: #c03cb7;
 }
 
 .search-box {
@@ -192,9 +197,10 @@ footer {
 .register-card button:hover {
     background: #bf23b7;
 }
-
+.hero .container {
+    margin-top: 60px;
+}
     </style>
-
 </head>
 
 <body>
@@ -202,20 +208,18 @@ footer {
     <header>
     <nav class="navbar">
         <div class="menu">
-            <h2>Мемуары Ванитаса</h2>
+            <h2 href="index.html">Мемуары Ванитаса</h2>
             <ul class="nav-links">
-                <li><a href="src/characters.html">Персонажи</a></li>
-                <li><a href="src/theories.html">Теории</a></li>
-                <li><a href="src/arts.html">Арты</a></li>
-                <li><a href="src/reviews.html">Отзывы</a></li>
-                <li><a href="src/facts.html">Интересные факты</a></li>
-                <li><a href="src/personal.html">Личный кабинет</a></li>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="characters.html">Персонажи</a></li>
+                <li><a href="theories.html">Теории</a></li>
+                <li><a href="arts.html">Арты</a></li>
+                <li><a href="reviews.html">Отзывы</a></li>
+                <li><a href="facts.html">Интересные факты</a></li>
+                <li><a href="personal.html">Личный кабинет</a></li>
 
             </ul>
-            <div class="search-box">
-                <input type="text" placeholder="Поиск...">
-                <button type="submit">🔍</button>
-            </div>
+            
         </div>
     </nav>
 </header>
@@ -233,7 +237,7 @@ footer {
                 <div class="content">
                     <h1>Добро пожаловать в фандом МВ!</h1>
                     <figure class="img">
-                        <img src="src/assets/img/Wisparik_vanitas_poka_poka.jpg" alt="Ванитас">
+                        <img src="assets/img/Wisparik_vanitas_poka_poka.jpg" alt="Ванитас">
                     </figure>
                     <ul class="features">
                         <h2>Здесь вы сможете найти:</h2>
@@ -245,7 +249,7 @@ footer {
                 </div>
             </div>
         </section>
-         <section class="registration">
+       <section class="registration">
             <div class="register-card">
                 <h2>Регистрация</h2>
                 <form id="register-form">
@@ -265,24 +269,8 @@ footer {
         </section>
 
 
-        <section class="password-reset">
-    <div class="reset-card">
-        <h2>Восстановление пароля</h2>
-        <form id="reset-form">
-            <label for="email">Введите ваш Email:</label>
-            <input type="email" id="reset-email" required>
-            <button type="submit">Отправить код</button>
-        </form>
-        <div id="code-section" style="display: none;">
-            <label for="code">Введите код восстановления:</label>
-            <input type="text" id="reset-code" required>
-            <label for="new-password">Новый пароль:</label>
-            <input type="password" id="new-password" required>
-            <button id="confirm-reset">Подтвердить</button>
-        </div>
-    </div>
-</section>
 
+       
 
     </main>
 
@@ -290,6 +278,18 @@ footer {
         <p>&copy; 2025 VanitasNoCarte. Все права защищены.</p>
     </footer>
 
+    <script src="assets/js/app.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const links = document.querySelectorAll('.nav-links li a');
+        const current = window.location.pathname.split('/').pop();
+        links.forEach(link => {
+            if (link.getAttribute('href') === current) {
+                link.classList.add('active');
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>
