@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             localStorage.setItem("user", JSON.stringify({ username, email, password }));
             alert(`Регистрация успешна! Добро пожаловать, ${username}.`);
-            location.reload();
+            window.location.href = "personal.html";
         });
     }
 
@@ -203,127 +203,56 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-    if (uploadForm && gallery) {
-    uploadForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        const fileInput = document.getElementById("upload-file");
-        if (fileInput.files.length === 0) return;
-        const file = fileInput.files[0];
-
-        // 🔹 Проверяем тип файла
-        const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
-        if (!allowedTypes.includes(file.type)) {
-            alert("Ошибка: можно загружать только изображения!");
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const newArt = document.createElement("div");
-            newArt.classList.add("art");
-            newArt.innerHTML = `
-                <img src="${e.target.result}" alt="Ваш арт" class="preview">
-                <div class="art-actions">
-                    <button class="like-btn">👍</button>
-                </div>
-            `;
-            gallery.appendChild(newArt);
-        };
-        reader.readAsDataURL(file);
-        fileInput.value = "";
-    });
-}
 
     // --- Теории ---
- const theoryList = document.querySelector(".theory-list");
+    const theoryList = document.querySelector(".theory-list");
     const theoryForm = document.querySelector(".theory-form");
     if (theoryForm && theoryList) {
-    theoryForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        const title = document.getElementById("title").value.trim();
-        const content = document.getElementById("content").value.trim();
-        const imageInput = document.getElementById("image");
+        theoryForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const title = document.getElementById("title").value.trim();
+            const content = document.getElementById("content").value.trim();
+            const imageInput = document.getElementById("image");
 
-        if (!title || !content) {
-            alert("Заполните все поля!");
-            return;
-        }
-
-        // 🔹 Проверяем тип файла
-        if (imageInput.files.length > 0) {
-            const file = imageInput.files[0];
-            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
-
-            if (!allowedTypes.includes(file.type)) {
-                alert("Ошибка: можно загружать только изображения!");
+            if (!title || !content) {
+                alert("Заполните все поля!");
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
+            // 🔹 Проверяем тип файла
+            if (imageInput.files.length > 0) {
+                const file = imageInput.files[0];
+                const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+
+                if (!allowedTypes.includes(file.type)) {
+                    alert("Ошибка: можно загружать только изображения!");
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newTheory = document.createElement("div");
+                    newTheory.classList.add("theory");
+                    newTheory.innerHTML = `<h3>${title}</h3>`;
+                    newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
+                    newTheory.innerHTML += `<p>${content}</p>`;
+                    theoryList.appendChild(newTheory);
+                };
+                reader.readAsDataURL(file);
+            } else {
                 const newTheory = document.createElement("div");
                 newTheory.classList.add("theory");
                 newTheory.innerHTML = `<h3>${title}</h3>`;
-                newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
                 newTheory.innerHTML += `<p>${content}</p>`;
                 theoryList.appendChild(newTheory);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            const newTheory = document.createElement("div");
-            newTheory.classList.add("theory");
-            newTheory.innerHTML = `<h3>${title}</h3>`;
-            newTheory.innerHTML += `<p>${content}</p>`;
-            theoryList.appendChild(newTheory);
-        }
+            }
 
-        theoryForm.reset();
-    });
-}
-
-
+            theoryForm.reset();
+        });
+    }
 
     // --- Личный кабинет: проверка регистрации и профиль ---
-  /*   document.addEventListener("DOMContentLoaded", function() {
-    const savedName = localStorage.getItem("username");
-    const savedAvatar = localStorage.getItem("avatar");
-
-    console.log("Загруженные данные:", savedName, savedAvatar); // 🔹 Проверяем, есть ли данные
-
-    if (savedAvatar) {
-        avatarImg.src = savedAvatar;
-    } else {
-        avatarImg.src = "default-avatar.png"; // 🔹 Устанавливаем аватар по умолчанию
-    }
-
-    if (savedName) {
-        usernameInput.value = savedName;
-    }
-
-    if (avatarUpload) {
-        avatarUpload.addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    avatarImg.src = e.target.result;
-                    localStorage.setItem("avatar", e.target.result);
-                    console.log("Аватар сохранён! ✅");
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    if (usernameInput) {
-        usernameInput.addEventListener("input", function() {
-            localStorage.setItem("username", this.value);
-            console.log("Имя пользователя сохранено! ✅");
-        });
-    }
-});
- */
-   if (window.location.pathname.includes("personal.html")) {
+    if (window.location.pathname.includes("personal.html")) {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (!userData) {
             const redirect = confirm("Вам нужно зарегистрироваться, чтобы зайти в личный кабинет! Нажмите 'ОК' для перехода на главную.");
