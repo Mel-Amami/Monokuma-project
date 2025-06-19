@@ -4,237 +4,356 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ванитас</title>
-    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
     <style>
         * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-body {
-    font-family: 'Russo One', sans-serif;
-    background-color: #222;
-    color: #fff;
-}
+        body {
+            font-family: 'Russo One', sans-serif;
+            background-color: #222;
+            color: #fff;
+            padding-top: 70px; /* Отступ для фиксированного меню */
+        }
 
-/* Контейнер */
-.container {
-    max-width: 1200px;
-    width: 90%;
-    margin: 0 auto;
-    text-align: center;
-}
+        /* Контейнер */
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+        }
 
-/* Шапка и меню */
-.navbar {
-    width: 100%;
-    background: linear-gradient(90deg, #6A00F4, #8E44AD);
-    padding: 15px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-}
+        /* Шапка и меню */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(90deg, #6A00F4, #8E44AD);
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
 
-.menu {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-}
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
 
-.nav-links li a {
-    text-decoration: none;
-    color: rgba(42, 23, 41, 0.682);
-    font-weight: bold;
-    font-size: 16px;
-}
+        .nav-links li a {
+            text-decoration: none;
+            color: rgba(42, 23, 41, 0.682);
+            font-weight: bold;
+            font-size: 16px;
+        }
 
-.search-box {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    position: absolute;
-    right: 20px; /* Отодвигаем в правый угол */
-}
+        .character-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+            background: linear-gradient(90deg, #21003c, #550087);
+            color: #fff;
+            font-family: 'Russo One', sans-serif;
+            text-align: center;
+            padding: 50px 20px;
+        }
 
-.search-box input {
-    padding: 7px;
-    border: none;
-    border-radius: 5px;
-}
+        .container {
+            max-width: 800px;
+            background: rgba(44, 43, 43, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(190, 50, 255, 0.6);
+            animation: fadeIn 1s ease-in-out;
+        }
 
-.search-box button {
-    background: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-}
-.character-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(90deg, #21003c, #550087);
-    color: #fff;
-    font-family: 'Russo One', sans-serif;
-    text-align: center;
-    padding: 50px;
-}
+        /* Стили для бургер-меню персонажей */
+        .characters-burger {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            background: rgba(200, 60, 183, 0.7);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
 
-.container {
-    max-width: 800px;
-    background: rgba(44, 43, 43, 0.85);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(190, 50, 255, 0.6);
-    animation: fadeIn 1s ease-in-out;
-}
+        .characters-burger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 3px 0;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
 
-h1 {
-    font-size: 2.5rem;
-    color: #c03cb7;
-    margin-bottom: 20px;
-}
+        /* Сайдбар с персонажами */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            height: 100vh;
+            max-height: 100vh;
+            overflow-y: auto;
+            background: rgba(44, 43, 43, 0.95);
+            padding: 20px;
+            box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.5);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
 
-img {
-    width: 250px;
-    height: auto;
-    border-radius: 10px;
-    border: 4px solid #8e44ad;
-    box-shadow: 0 0 10px rgba(200, 60, 183, 0.8);
-    transition: transform 0.3s ease;
-}
+        .sidebar.open {
+            transform: translateX(0);
+        }
 
-img:hover {
-    transform: scale(1.05);
-}
+        .sidebar h3 {
+            color: #c03cb7;
+            text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
 
-p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: #ddd;
-    text-align: justify;
-}
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
 
-/* Анимация появления */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        .sidebar ul li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            transition: background 0.3s ease;
+            margin-bottom: 5px;
+        }
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 220px;
-    max-height: 90vh; /* Ограничиваем высоту */
-    overflow-y: auto; /* Разрешаем прокрутку */
-    background: rgba(44, 43, 43, 0.9);
-    padding: 20px;
-    box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.5);
-}
+        .sidebar ul li:hover {
+            background: rgba(200, 60, 183, 0.7);
+        }
 
-/* Скрываем некрасивый стандартный скролл и делаем плавный */
-.sidebar::-webkit-scrollbar {
-    width: 8px;
-}
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            width: 100%;
+        }
 
-.sidebar::-webkit-scrollbar-thumb {
-    background: #c03cb7;
-    border-radius: 10px;
-}
+        .sidebar ul li img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #8e44ad;
+            transition: transform 0.3s ease;
+        }
 
-.sidebar h3 {
-    color: #c03cb7;
-    text-align: center;
-    font-size: 1.4rem;
-}
+        .sidebar ul li:hover img {
+            transform: scale(1.1);
+        }
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-}
+        .sidebar ul li span {
+            font-size: 1rem;
+        }
 
-.sidebar ul li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    transition: background 0.3s ease;
-}
+        /* Бургер для основного меню */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 1100;
+            margin-left: 10px;
+        }
 
-.sidebar ul li:hover {
-    background: rgba(200, 60, 183, 0.7);
-}
+        .burger span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            background: #fff;
+            margin: 4px 0;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
 
-.sidebar ul li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: white;
-}
+        /* Адаптация под мобильные устройства */
+        @media (max-width: 900px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 10px 0 10px;
+                height: auto;
+            }
+            
+            .menu {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100vw;
+                background: linear-gradient(90deg, #6A00F4, #8E44AD);
+                position: absolute;
+                top: 60px;
+                left: 0;
+                z-index: 1001;
+                padding: 10px 0;
+                border-radius: 0 0 10px 10px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            }
+            
+            .nav-links.open {
+                display: flex;
+            }
+            
+            .burger {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            .nav-links li a {
+                font-size: 1.2rem;
+                padding: 10px 0;
+                display: block;
+            }
 
-.sidebar ul li img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #8e44ad;
-    transition: transform 0.3s ease;
-}
+            /* Показываем бургер для персонажей на мобильных */
+            .characters-burger {
+                display: flex;
+            }
 
-.sidebar ul li:hover img {
-    transform: scale(1.1);
-}
+            /* Корректируем отступы для контента */
+            .character-page {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
 
-.sidebar ul li span {
-    font-size: 1.2rem;
-}
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 8px 4px 0 4px;
+            }
+            
+            .menu h2 {
+                font-size: 1.1rem;
+            }
+            
+            .burger {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .nav-links {
+                font-size: 1.1rem;
+            }
 
-.burger {display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;cursor:pointer;z-index:1100;margin-left:10px;}
-.burger span {display:block;width:28px;height:4px;background:#fff;margin:4px 0;border-radius:2px;transition:0.3s;}
-@media (max-width:900px){.navbar{flex-direction:column;align-items:flex-start;padding:10px 10px 0 10px;height:auto;}.menu{width:100%;flex-direction:row;justify-content:space-between;align-items:center;}.nav-links{display:none;flex-direction:column;width:100vw;background:linear-gradient(90deg,#6A00F4,#8E44AD);position:absolute;top:60px;left:0;z-index:1001;padding:10px 0;border-radius:0 0 10px 10px;box-shadow:0 8px 24px rgba(0,0,0,0.15);}.nav-links.open{display:flex;}.burger{display:flex;}.nav-links li{margin:10px 0;text-align:center;}.nav-links li a{font-size:1.2rem;padding:10px 0;display:block;}}
-@media (max-width:600px){.navbar{padding:8px 4px 0 4px;}.menu h2{font-size:1.1rem;}.burger{width:32px;height:32px;}.nav-links{font-size:1.1rem;}}
+            .characters-burger {
+                left: 10px;
+                width: 40px;
+                height: 40px;
+            }
 
+            .characters-burger span {
+                width: 20px;
+                height: 2px;
+            }
+
+            .sidebar {
+                width: 180px;
+                padding: 15px;
+            }
+
+            .sidebar ul li img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .sidebar ul li span {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Анимация появления */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: #333;
+            padding: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-<div class="sidebar">
+<!-- Бургер для открытия списка персонажей -->
+<div class="characters-burger" id="characters-burger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- Сайдбар с персонажами -->
+<div class="sidebar" id="characters-sidebar">
     <h3>Персонажи</h3>
     <ul>
         <li><a href="vanitas.html"><img src="assets/img/ванитвс.jpg" alt="Ванитас"><span>Ванитас</span></a></li>
-        <li><a href="noe.html"><img src="assets/img/ной.jpg" alt="Ной"><span>Ной </span></a></li>
+        <li><a href="noe.html"><img src="assets/img/ной.jpg" alt="Ной"><span>Ной</span></a></li>
         <li><a href="jeanne.html"><img src="assets/img/жанна.jpg" alt="Жанна"><span>Жанна</span></a></li>
         <li><a href="astolfo.html"><img src="assets/img/аст.jpg" alt="Астольфо"><span>Астольфо</span></a></li>
-        <li><a href="roland.html"><img src="assets/img/роналд.jpg" alt="Ноэ Арх"><span>Роланд</span></a></li>
-        <li><a href="amelia.html"><img src="assets/img/амас.jpg" alt="Жанна"><span>Амелия</span></a></li>
-        <li><a href="misha.html"><img src="assets/img/миша.jpg" alt="Ванитас"><span>Михаил</span></a></li>
-        <li><a href="louis.html"><img src="assets/img/луи.jpg" alt="Ноэ Арх"><span>Луи</span></a></li>
-        <li><a href="chloe.html"><img src="assets/img/хлоя.jpg" alt="Жанна"><span>Хлоя</span></a></li>
-        <li><a href="rutven.html"><img src="assets/img/рутвен.jpg" alt="Ванитас"><span>Рутвен</span></a></li>
-        <li><a href="domi.html"><img src="assets/img/доми.jpg" alt="Ноэ Арх"><span>Доми</span></a></li>
-        <li><a href="charles.html"><img src="assets/img/шарл.jpg" alt="Жанна"><span>Шарлатан</span></a></li>
-        <li><a href="blank.html"><img src="assets/img/бкзеб.jpg" alt="Ванитас"><span>Безликий</span></a></li>
-        <li><a href="veronica.html"><img src="assets/img/вер.jpg" alt="Ноэ Арх"><span>Вероника</span></a></li>
-        
+        <li><a href="roland.html"><img src="assets/img/роналд.jpg" alt="Роланд"><span>Роланд</span></a></li>
+        <li><a href="amelia.html"><img src="assets/img/амас.jpg" alt="Амелия"><span>Амелия</span></a></li>
+        <li><a href="misha.html"><img src="assets/img/миша.jpg" alt="Михаил"><span>Михаил</span></a></li>
+        <li><a href="louis.html"><img src="assets/img/луи.jpg" alt="Луи"><span>Луи</span></a></li>
+        <li><a href="chloe.html"><img src="assets/img/хлоя.jpg" alt="Хлоя"><span>Хлоя</span></a></li>
+        <li><a href="rutven.html"><img src="assets/img/рутвен.jpg" alt="Рутвен"><span>Рутвен</span></a></li>
+        <li><a href="domi.html"><img src="assets/img/доми.jpg" alt="Доми"><span>Доми</span></a></li>
+        <li><a href="charles.html"><img src="assets/img/шарл.jpg" alt="Шарлатан"><span>Шарлатан</span></a></li>
+        <li><a href="blank.html"><img src="assets/img/бкзеб.jpg" alt="Безликий"><span>Безликий</span></a></li>
+        <li><a href="veronica.html"><img src="assets/img/вер.jpg" alt="Вероника"><span>Вероника</span></a></li>
     </ul>
 </div>
 
@@ -263,9 +382,9 @@ p {
 <main>
     <section class="character-page">
         <div class="container">
-                    <h1>Михаил</h1>
+            <h1>Михаил</h1>
             <img src="assets/img/миша.jpg" alt="Михаил">
-            <p>Имя: Михаил, "Михаил Гранат", "Михаил Гранат", "Михаил Гранат", "Михаил Гранат", "Михаил Гранат", "Михаил Гранат"
+            <p>Имя: Михаил, "Михаил", "Михаил", "Михаил", "Михаил", "Михаил", "Михаил"
 
 Происхождение: Vanitas no Carte
 
@@ -307,28 +426,50 @@ p {
 </footer>
 
 <script>
-// Бургер-меню для мобильной навигации
-const burger = document.getElementById('burger-menu');
-const navLinks = document.querySelector('.nav-links');
-function checkWidth() {
-  if (window.innerWidth <= 900) {
-    burger.style.display = 'flex';
-    navLinks.classList.remove('open');
-  } else {
-    burger.style.display = 'none';
-    navLinks.classList.remove('open');
-  }
-}
-checkWidth();
-window.addEventListener('resize', checkWidth);
-burger.addEventListener('click', function() {
-  navLinks.classList.toggle('open');
-});
-avLinks.addEventListener('click', function(e) {
-  if (e.target.tagName === 'A' && window.innerWidth <= 900) {
-    navLinks.classList.remove('open');
-  }
-});
+    // Бургер-меню для основного меню
+    const burger = document.getElementById('burger-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    function checkWidth() {
+        if (window.innerWidth <= 900) {
+            burger.style.display = 'flex';
+            navLinks.classList.remove('open');
+        } else {
+            burger.style.display = 'none';
+            navLinks.classList.remove('open');
+        }
+    }
+    
+    checkWidth();
+    window.addEventListener('resize', checkWidth);
+    
+    burger.addEventListener('click', function() {
+        navLinks.classList.toggle('open');
+    });
+    
+    navLinks.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && window.innerWidth <= 900) {
+            navLinks.classList.remove('open');
+        }
+    });
+    
+    // Бургер-меню для списка персонажей
+    const charactersBurger = document.getElementById('characters-burger');
+    const charactersSidebar = document.getElementById('characters-sidebar');
+    
+    charactersBurger.addEventListener('click', function() {
+        charactersSidebar.classList.toggle('open');
+    });
+    
+    // Закрытие сайдбара при клике на ссылку
+    const characterLinks = document.querySelectorAll('.sidebar ul li a');
+    characterLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 900) {
+                charactersSidebar.classList.remove('open');
+            }
+        });
+    });
 </script>
 
 </body>
