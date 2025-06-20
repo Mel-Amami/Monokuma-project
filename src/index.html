@@ -16,6 +16,7 @@
             font-family: 'Russo One', sans-serif;
             background-color: #222;
             color: #fff;
+            padding-top: 70px; /* Добавлено для фиксированного header */
         }
 
         /* Контейнер */
@@ -26,7 +27,7 @@
             text-align: center;
         }
 
-        /* Шапка и меню */
+        /* Шапка и меню - ИСПРАВЛЕНО */
         .navbar {
             width: 100%;
             background: linear-gradient(90deg, #6A00F4, #8E44AD);
@@ -155,110 +156,121 @@
             font-size: 0.9rem;
         }
 
-        /* Адаптивность */
+        /* Адаптивность - ИСПРАВЛЕНО */
         @media (max-width: 900px) {
+            body {
+                padding-top: 60px; /* Добавлено для фиксированного header */
+            }
+            
             .navbar {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 10px 10px 0 10px;
-                height: auto;
-            }
-            .menu {
-                width: 100%;
                 flex-direction: row;
-                justify-content: space-between;
                 align-items: center;
+                padding: 10px;
+                height: 60px;
             }
+            
+            .menu {
+                justify-content: space-between;
+            }
+            
             .nav-links {
                 display: none;
                 flex-direction: column;
-                width: 100vw;
+                width: 100%;
                 background: linear-gradient(90deg, #6A00F4, #8E44AD);
                 position: absolute;
                 top: 60px;
                 left: 0;
                 z-index: 1001;
-                padding: 10px 0;
+                padding: 20px 0;
                 border-radius: 0 0 10px 10px;
                 box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             }
+            
             .nav-links.open {
                 display: flex;
             }
+            
             .burger {
                 display: flex;
+                position: relative;
+                z-index: 1100;
             }
+            
             .search-box {
                 position: static;
                 margin-top: 10px;
                 width: 100%;
                 justify-content: center;
             }
+            
             .nav-links li {
                 margin: 10px 0;
                 text-align: center;
             }
+            
             .nav-links li a {
                 font-size: 1.2rem;
                 padding: 10px 0;
                 display: block;
+                color: white;
+            }
+            
+            .hero {
+                min-height: 100vh;
+            }
+            
+            .content {
+                padding: 30px 15px;
             }
         }
 
         @media (max-width: 600px) {
             .navbar {
-                padding: 8px 4px 0 4px;
+                padding: 10px;
             }
+            
             .menu h2 {
                 font-size: 1.1rem;
             }
+            
             .burger {
                 width: 32px;
                 height: 32px;
             }
+            
             .nav-links {
                 font-size: 1.1rem;
             }
-
-            /* Адаптация контента для мобильных */
-            .content {
-                padding: 30px 20px;
-            }
-
+            
             h1 {
                 font-size: 1.5rem;
             }
-
+            
             .features {
                 font-size: 1rem;
+                padding-left: 20px;
+                text-align: left;
             }
-
+            
             .features h2 {
                 font-size: 1.3rem;
+                text-align: center;
             }
-
+            
             .img img {
-                max-width: 90%;
+                max-width: 100%;
                 height: auto;
             }
-
-            .hero {
-                min-height: 1200px;
-                padding: 10px;
-            }
         }
 
         .registration {
-            position: absolute;
-            top: 120%;
-            left: 50%;
-            transform: translate(-50%, -30%);
+            position: relative;
+            margin: 40px auto;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
-
-        .registration {
-            margin-top: 50px; /* Смещение вверх */
-        }
-
 
         .register-card {
             background: rgba(44, 43, 43, 0.8);
@@ -270,6 +282,7 @@
 
         .register-card h2 {
             color: #c03cb7;
+            margin-bottom: 15px;
         }
 
         .register-card form {
@@ -277,8 +290,13 @@
             flex-direction: column;
         }
 
+        .register-card label {
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
         .register-card input {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -292,42 +310,16 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
 
         .register-card button:hover {
             background: #bf23b7;
         }
+        
         .hero .container {
-            margin-top: 60px;
-        }
-        .burger {
-          display: none;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 40px;
-          height: 40px;
-          cursor: pointer;
-          z-index: 1100;
-          margin-left: 10px;
-        }
-        .burger span {
-          display: block;
-          width: 28px;
-          height: 4px;
-          background: #fff;
-          margin: 4px 0;
-          border-radius: 2px;
-          transition: 0.3s;
-        }
-        @media (max-width:900px){
-          .navbar{flex-direction:column;align-items:flex-start;padding:10px 10px 0 10px;height:auto;}
-          .menu{width:100%;flex-direction:row;justify-content:space-between;align-items:center;}
-          .nav-links{display:none;flex-direction:column;width:100vw;background:linear-gradient(90deg,#6A00F4,#8E44AD);position:absolute;top:60px;left:0;z-index:1001;padding:10px 0;border-radius:0 0 10px 10px;box-shadow:0 8px 24px rgba(0,0,0,0.15);}
-          .nav-links.open{display:flex;}
-          .burger{display:flex;}
-          .nav-links li{margin:10px 0;text-align:center;}
-          .nav-links li a{font-size:1.2rem;padding:10px 0;display:block;}
+            margin-top: 0;
         }
     </style>
 </head>
@@ -335,32 +327,30 @@
 <body>
 
     <header>
-    <nav class="navbar">
-        <div class="menu">
-            <h2>Мемуары Ванитаса</h2>
-            <div class="burger" id="burger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+        <nav class="navbar">
+            <div class="menu">
+                <h2>Мемуары Ванитаса</h2>
+                <div class="burger" id="burger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="characters.html">Персонажи</a></li>
+                    <li><a href="theories.html">Теории</a></li>
+                    <li><a href="arts.html">Арты</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="facts.html">Интересные факты</a></li>
+                    <li><a href="personal.html">Личный кабинет</a></li>
+                </ul>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="characters.html">Персонажи</a></li>
-                <li><a href="theories.html">Теории</a></li>
-                <li><a href="arts.html">Арты</a></li>
-                <li><a href="reviews.html">Отзывы</a></li>
-                <li><a href="facts.html">Интересные факты</a></li>
-                <li><a href="personal.html">Личный кабинет</a></li>
-            </ul>
-        </div>
-    </nav>
-</header>
-
+        </nav>
+    </header>
 
     <main>
         <section class="hero">
             <div class="container">
-
                 <div class="content">
                     <h1>Добро пожаловать в фандом МВ!</h1>
                     <figure class="img">
@@ -368,32 +358,33 @@
                     </figure>
                     <ul class="features">
                         <h2>Здесь вы сможете найти:</h2>
-                        <li>1.Интересные факты и информация о персонажах.</li>
-                        <li>2.Теории и догадки.</li>
-                        <li>3.Обсуждение и отзывы.</li>
-                        <li>4.Галерея артов от любимых авторов.</li>
+                        <li>1. Интересные факты и информация о персонажах.</li>
+                        <li>2. Теории и догадки.</li>
+                        <li>3. Обсуждение и отзывы.</li>
+                        <li>4. Галерея артов от любимых авторов.</li>
                     </ul>
                 </div>
             </div>
         </section>
-       <section class="registration">
+        
+        <section class="registration">
             <div class="register-card">
                 <h2>Регистрация</h2>
                 <form id="register-form">
                     <label for="username">Имя пользователя</label>
                     <input type="text" id="username" name="username" required>
-
+                    
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
-
+                    
                     <label for="password">Пароль</label>
                     <input type="password" id="password" name="password" 
                            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,20}$" 
                            title="Пароль должен содержать минимум 8 символов, максимум 20, включая буквы и цифры" 
                            required>
-
+                    
                     <button type="submit">Зарегистрироваться</button>
-                    <button id="login-btn">Вход</button> 
+                    <button id="login-btn" type="button">Вход</button> 
                 </form>
             </div>
         </section>
@@ -404,156 +395,174 @@
     </footer>
 
     <script>
-        // Бургер-меню для мобильной навигации (упрощенная версия)
-        const burger = document.getElementById('burger-menu');
-        const navLinks = document.querySelector('.nav-links');
-
-        function checkWidth() {
-          if (window.innerWidth <= 900) {
-            burger.style.display = 'flex';
-            navLinks.classList.remove('open');
-          } else {
-            burger.style.display = 'none';
-            navLinks.classList.remove('open');
-          }
-        }
-
-        checkWidth();
-        window.addEventListener('resize', checkWidth);
-
-        burger.addEventListener('click', function() {
-          navLinks.classList.toggle('open');
-        });
-
-        navLinks.addEventListener('click', function(e) {
-          if (e.target.tagName === 'A' && window.innerWidth <= 900) {
-            navLinks.classList.remove('open');
-          }
-        });
-
-        // Валидация пароля
-        function validatePassword(password) {
-          const minLength = 8;
-          const maxLength = 20;
-          const hasLetter = /[A-Za-z]/.test(password);
-          const hasDigit = /\d/.test(password);
-
-          if (password.length < minLength) {
-            return `Пароль должен содержать минимум ${minLength} символов`;
-          }
-
-          if (password.length > maxLength) {
-            return `Пароль должен содержать максимум ${maxLength} символов`;
-          }
-
-          if (!hasLetter) {
-            return 'Пароль должен содержать хотя бы одну букву';
-          }
-
-          if (!hasDigit) {
-            return 'Пароль должен содержать хотя бы одну цифру';
-          }
-
-          return null; // Пароль валиден
-        }
-
-        // Обработка кнопки входа
-        document.getElementById('login-btn').addEventListener('click', function(e) {
-          e.preventDefault();
-
-          const username = document.getElementById('username').value.trim();
-          const email = document.getElementById('email').value.trim();
-          const password = document.getElementById('password').value;
-
-          // Проверяем, что все поля заполнены
-          if (!username || !email || !password) {
-            alert('Пожалуйста, заполните все поля для входа');
-            return;
-          }
-
-          // Получаем зарегистрированных пользователей из localStorage
-          const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-
-          // Ищем пользователя с такими данными
-          const user = registeredUsers.find(u => 
-            u.username === username && 
-            u.email === email && 
-            u.password === password
-          );
-
-          if (user) {
-            // Пользователь найден - сохраняем данные для входа и переходим в личный кабинет
-            localStorage.setItem('currentUser', JSON.stringify({
-              username: user.username,
-              email: user.email
-            }));
-            alert('Вход выполнен успешно! Переходим в личный кабинет...');
-            window.location.href = 'src/personal.html';
-          } else {
-            alert('Ошибка! Пользователь с такими данными не найден. Проверьте правильность введенных данных.');
-          }
-        });
-
-        // Обработка формы регистрации
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-          e.preventDefault();
-
-          const username = document.getElementById('username').value.trim();
-          const email = document.getElementById('email').value.trim();
-          const password = document.getElementById('password').value;
-
-          // Проверка имени пользователя
-          if (username.length < 3) {
-            alert('Имя пользователя должно содержать минимум 3 символа');
-            return;
-          }
-
-          // Проверка email
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            alert('Введите корректный email адрес');
-            return;
-          }
-
-          // Проверка пароля
-          const passwordError = validatePassword(password);
-          if (passwordError) {
-            alert(passwordError);
-            return;
-          }
-
-          // Получаем существующих пользователей
-          const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-
-          // Проверяем, не зарегистрирован ли уже пользователь с таким именем или email
-          const existingUser = registeredUsers.find(u => 
-            u.username === username || u.email === email
-          );
-
-          if (existingUser) {
-            if (existingUser.username === username) {
-              alert('Пользователь с таким именем уже зарегистрирован');
-            } else {
-              alert('Пользователь с таким email уже зарегистрирован');
+        // Бургер-меню - ИСПРАВЛЕННАЯ ВЕРСИЯ
+        document.addEventListener('DOMContentLoaded', function() {
+            const burger = document.getElementById('burger-menu');
+            const navLinks = document.getElementById('nav-links');
+            
+            if (!burger || !navLinks) {
+                console.error('Не удалось найти элементы бургер-меню');
+                return;
             }
-            return;
-          }
+            
+            function checkWidth() {
+                if (window.innerWidth <= 900) {
+                    burger.style.display = 'flex';
+                    navLinks.classList.remove('open');
+                } else {
+                    burger.style.display = 'none';
+                    navLinks.classList.remove('open');
+                }
+            }
+            
+            // Инициализация при загрузке
+            checkWidth();
+            
+            // Обработчик изменения размера окна
+            window.addEventListener('resize', checkWidth);
+            
+            // Клик по бургеру
+            burger.addEventListener('click', function() {
+                navLinks.classList.toggle('open');
+                console.log('Бургер меню клик, состояние:', navLinks.classList.contains('open'));
+            });
+            
+            // Клик по пунктам меню (для мобильных)
+            navLinks.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && window.innerWidth <= 900) {
+                    navLinks.classList.remove('open');
+                }
+            });
 
-          // Добавляем нового пользователя
-          registeredUsers.push({
-            username: username,
-            email: email,
-            password: password,
-            registrationDate: new Date().toISOString()
-          });
+            // Валидация пароля
+            function validatePassword(password) {
+                const minLength = 8;
+                const maxLength = 20;
+                const hasLetter = /[A-Za-z]/.test(password);
+                const hasDigit = /\d/.test(password);
 
-          // Сохраняем в localStorage
-          localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                if (password.length < minLength) {
+                    return `Пароль должен содержать минимум ${minLength} символов`;
+                }
 
-          alert('Регистрация успешна! Теперь вы можете войти в систему.');
-          this.reset();
+                if (password.length > maxLength) {
+                    return `Пароль должен содержать максимум ${maxLength} символов`;
+                }
+
+                if (!hasLetter) {
+                    return 'Пароль должен содержать хотя бы одну букву';
+                }
+
+                if (!hasDigit) {
+                    return 'Пароль должен содержать хотя бы одну цифру';
+                }
+
+                return null; // Пароль валиден
+            }
+
+            // Обработка кнопки входа
+            document.getElementById('login-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const username = document.getElementById('username').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+
+                // Проверяем, что все поля заполнены
+                if (!username || !email || !password) {
+                    alert('Пожалуйста, заполните все поля для входа');
+                    return;
+                }
+
+                // Получаем зарегистрированных пользователей из localStorage
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+
+                // Ищем пользователя с такими данными
+                const user = registeredUsers.find(u => 
+                    u.username === username && 
+                    u.email === email && 
+                    u.password === password
+                );
+
+                if (user) {
+                    // Пользователь найден - сохраняем данные для входа и переходим в личный кабинет
+                    localStorage.setItem('currentUser', JSON.stringify({
+                        username: user.username,
+                        email: user.email
+                    }));
+                    alert('Вход выполнен успешно! Переходим в личный кабинет...');
+                    window.location.href = 'personal.html';
+                } else {
+                    alert('Ошибка! Пользователь с такими данными не найден. Проверьте правильность введенных данных.');
+                }
+            });
+
+            // Обработка формы регистрации
+            document.getElementById('register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const username = document.getElementById('username').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+
+                // Проверка имени пользователя
+                if (username.length < 3) {
+                    alert('Имя пользователя должно содержать минимум 3 символа');
+                    return;
+                }
+
+                // Проверка email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Введите корректный email адрес');
+                    return;
+                }
+
+                // Проверка пароля
+                const passwordError = validatePassword(password);
+                if (passwordError) {
+                    alert(passwordError);
+                    return;
+                }
+
+                // Получаем существующих пользователей
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+
+                // Проверяем, не зарегистрирован ли уже пользователь с таким именем или email
+                const existingUser = registeredUsers.find(u => 
+                    u.username === username || u.email === email
+                );
+
+                if (existingUser) {
+                    if (existingUser.username === username) {
+                        alert('Пользователь с таким именем уже зарегистрирован');
+                    } else {
+                        alert('Пользователь с таким email уже зарегистрирован');
+                    }
+                    return;
+                }
+
+                // Добавляем нового пользователя
+                registeredUsers.push({
+                    username: username,
+                    email: email,
+                    password: password,
+                    registrationDate: new Date().toISOString()
+                });
+
+                // Сохраняем в localStorage
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                
+                // Автоматически входим после регистрации
+                localStorage.setItem('currentUser', JSON.stringify({
+                    username: username,
+                    email: email
+                }));
+
+                alert('Регистрация успешна! Переходим в личный кабинет...');
+                window.location.href = 'personal.html';
+            });
         });
-        </script>
+    </script>
 </body>
-
-</html> 
+</html>
