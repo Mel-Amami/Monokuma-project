@@ -3,49 +3,100 @@ document.addEventListener("DOMContentLoaded", function() {
     const registerForm = document.getElementById("register-form");
     const loginBtn = document.getElementById("login-btn");
 
-    function checkUser() {
-        const userData = JSON.parse(localStorage.getItem("user"));
-        if (userData) {
-            document.querySelector(".register-card").innerHTML = `
-                <h2>Привет, ${userData.username}!</h2>
-                <p>Вы уже вошли в систему.</p>
-                <button id="logout-btn">Выйти</button>
-            `;
-            document.getElementById("logout-btn").addEventListener("click", function() {
-                localStorage.removeItem("user");
-                location.reload();
-            });
+    // Проверка, авторизован ли пользователь
+    function checkCurrentUser() {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (currentUser) {
+            const card = document.querySelector(".register-card");
+            if (card) {
+                card.innerHTML = `
+                    <h2>Привет, ${currentUser.username}!</h2>
+                    <p>Вы уже вошли в систему.</p>
+                    <button id="logout-btn">Выйти</button>
+                `;
+                document.getElementById("logout-btn").addEventListener("click", function() {
+                    localStorage.removeItem("currentUser");
+                    location.reload();
+                });
+            }
         }
     }
 
+    // Регистрация
     if (registerForm) {
         registerForm.addEventListener("submit", function(event) {
             event.preventDefault();
             const username = document.getElementById("username").value.trim();
             const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value.trim();
-            if (!username || !email || !password) {
-                alert("Заполните все поля!");
+            const password = document.getElementById("password").value;
+
+            if (username.length < 3) {
+                alert('Имя пользователя должно содержать минимум 3 символа');
                 return;
             }
-            localStorage.setItem("user", JSON.stringify({ username, email, password }));
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Введите корректный email адрес');
+                return;
+            }
+            if (!password || password.length < 8 || password.length > 20 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+                alert('Пароль должен содержать 8-20 символов, буквы и цифры');
+                return;
+            }
+
+            let registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+            const existingUser = registeredUsers.find(u => u.username === username || u.email === email);
+            if (existingUser) {
+                if (existingUser.username === username) {
+                    alert('Пользователь с таким именем уже зарегистрирован');
+                } else {
+                    alert('Пользователь с таким email уже зарегистрирован');
+                }
+                return;
+            }
+            const newUser = { username, email, password, registrationDate: new Date().toISOString() };
+            registeredUsers.push(newUser);
+            localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+            localStorage.setItem("currentUser", JSON.stringify({ username, email }));
             alert(`Регистрация успешна! Добро пожаловать, ${username}.`);
-            window.location.href = "personal.html";
+            window.location.href = getPersonalPageHref();
         });
     }
 
+    // Вход
     if (loginBtn) {
-        loginBtn.addEventListener("click", function() {
-            const userData = JSON.parse(localStorage.getItem("user"));
-            if (userData) {
-                window.location.href = "personal.html";
+        loginBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            if (!username || !email || !password) {
+                alert("Пожалуйста, заполните все поля для входа");
+                return;
+            }
+            const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+            const user = registeredUsers.find(u => u.username === username && u.email === email && u.password === password);
+            if (user) {
+                localStorage.setItem("currentUser", JSON.stringify({ username: user.username, email: user.email }));
+                alert("Вход выполнен успешно! Переходим в личный кабинет...");
+                window.location.href = getPersonalPageHref();
             } else {
-                alert("Нет сохранённого аккаунта. Зарегистрируйтесь!");
+                alert("Ошибка! Пользователь с такими данными не найден. Проверьте правильность введенных данных.");
             }
         });
     }
 
-    checkUser();
+    // Определить путь до личного кабинета (работает и для index.html, и для src/index.html)
+    function getPersonalPageHref() {
+        // Если мы находимся в src/, то переход в personal.html без src/
+        if (window.location.pathname.includes('/src/')) {
+            return 'personal.html';
+        } else {
+            return 'src/personal.html';
+        }
+    }
+
+    checkCurrentUser();
 
 /* document.addEventListener("DOMContentLoaded", function() {
     const resetForm = document.getElementById("reset-form");
@@ -203,56 +254,127 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+    if (uploadForm && gallery) {
+    uploadForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const fileInput = document.getElementById("upload-file");
+        if (fileInput.files.length === 0) return;
+        const file = fileInput.files[0];
+
+        // 🔹 Проверяем тип файла
+        const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+        if (!allowedTypes.includes(file.type)) {
+            alert("Ошибка: можно загружать только изображения!");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const newArt = document.createElement("div");
+            newArt.classList.add("art");
+            newArt.innerHTML = `
+                <img src="${e.target.result}" alt="Ваш арт" class="preview">
+                <div class="art-actions">
+                    <button class="like-btn">👍</button>
+                </div>
+            `;
+            gallery.appendChild(newArt);
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = "";
+    });
+}
 
     // --- Теории ---
-    const theoryList = document.querySelector(".theory-list");
+ const theoryList = document.querySelector(".theory-list");
     const theoryForm = document.querySelector(".theory-form");
     if (theoryForm && theoryList) {
-        theoryForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            const title = document.getElementById("title").value.trim();
-            const content = document.getElementById("content").value.trim();
-            const imageInput = document.getElementById("image");
+    theoryForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const title = document.getElementById("title").value.trim();
+        const content = document.getElementById("content").value.trim();
+        const imageInput = document.getElementById("image");
 
-            if (!title || !content) {
-                alert("Заполните все поля!");
+        if (!title || !content) {
+            alert("Заполните все поля!");
+            return;
+        }
+
+        // 🔹 Проверяем тип файла
+        if (imageInput.files.length > 0) {
+            const file = imageInput.files[0];
+            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert("Ошибка: можно загружать только изображения!");
                 return;
             }
 
-            // 🔹 Проверяем тип файла
-            if (imageInput.files.length > 0) {
-                const file = imageInput.files[0];
-                const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
-
-                if (!allowedTypes.includes(file.type)) {
-                    alert("Ошибка: можно загружать только изображения!");
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const newTheory = document.createElement("div");
-                    newTheory.classList.add("theory");
-                    newTheory.innerHTML = `<h3>${title}</h3>`;
-                    newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
-                    newTheory.innerHTML += `<p>${content}</p>`;
-                    theoryList.appendChild(newTheory);
-                };
-                reader.readAsDataURL(file);
-            } else {
+            const reader = new FileReader();
+            reader.onload = function(e) {
                 const newTheory = document.createElement("div");
                 newTheory.classList.add("theory");
                 newTheory.innerHTML = `<h3>${title}</h3>`;
+                newTheory.innerHTML += `<img src="${e.target.result}" alt="${title}">`;
                 newTheory.innerHTML += `<p>${content}</p>`;
                 theoryList.appendChild(newTheory);
-            }
+            };
+            reader.readAsDataURL(file);
+        } else {
+            const newTheory = document.createElement("div");
+            newTheory.classList.add("theory");
+            newTheory.innerHTML = `<h3>${title}</h3>`;
+            newTheory.innerHTML += `<p>${content}</p>`;
+            theoryList.appendChild(newTheory);
+        }
 
-            theoryForm.reset();
+        theoryForm.reset();
+    });
+}
+
+
+
+    // --- Личный кабинет: проверка регистрации и профиль ---
+  /*   document.addEventListener("DOMContentLoaded", function() {
+    const savedName = localStorage.getItem("username");
+    const savedAvatar = localStorage.getItem("avatar");
+
+    console.log("Загруженные данные:", savedName, savedAvatar); // 🔹 Проверяем, есть ли данные
+
+    if (savedAvatar) {
+        avatarImg.src = savedAvatar;
+    } else {
+        avatarImg.src = "default-avatar.png"; // 🔹 Устанавливаем аватар по умолчанию
+    }
+
+    if (savedName) {
+        usernameInput.value = savedName;
+    }
+
+    if (avatarUpload) {
+        avatarUpload.addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    avatarImg.src = e.target.result;
+                    localStorage.setItem("avatar", e.target.result);
+                    console.log("Аватар сохранён! ✅");
+                };
+                reader.readAsDataURL(file);
+            }
         });
     }
 
-    // --- Личный кабинет: проверка регистрации и профиль ---
-    if (window.location.pathname.includes("personal.html")) {
+    if (usernameInput) {
+        usernameInput.addEventListener("input", function() {
+            localStorage.setItem("username", this.value);
+            console.log("Имя пользователя сохранено! ✅");
+        });
+    }
+});
+ */
+   if (window.location.pathname.includes("personal.html")) {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (!userData) {
             const redirect = confirm("Вам нужно зарегистрироваться, чтобы зайти в личный кабинет! Нажмите 'ОК' для перехода на главную.");
