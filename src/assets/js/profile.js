@@ -1,24 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const avatarImg = document.getElementById("avatar");
     const avatarUpload = document.getElementById("avatar-upload");
     const usernameInput = document.getElementById("username");
     // Для email, если нужно отобразить
     // const emailInput = document.getElementById("email");
 
-    if (!user) {
+    if (!currentUser) {
         alert("Вам нужно зарегистрироваться!");
         window.location.href = "index.html";
         return;
     }
 
     // Отобразить имя и email
-    if (usernameInput) usernameInput.value = user.username || "";
-    // if (emailInput) emailInput.value = user.email || "";
+    if (usernameInput) usernameInput.value = currentUser.username || "";
+    // if (emailInput) emailInput.value.value = currentUser.email || "";
 
     // Отобразить аватарку, если есть
-    if (user.avatar && avatarImg) {
-        avatarImg.src = user.avatar;
+    const userAvatar = localStorage.getItem("avatar");
+    if (userAvatar && avatarImg) {
+        avatarImg.src = userAvatar;
     }
 
     // Смена аватарки
@@ -29,19 +30,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     avatarImg.src = e.target.result;
-                    user.avatar = e.target.result;
-                    localStorage.setItem("user", JSON.stringify(user));
+                    localStorage.setItem("avatar", e.target.result);
                 };
                 reader.readAsDataURL(file);
             }
         });
     }
 
-    // Смена имени
+    // Смена имени (только в currentUser)
     if (usernameInput) {
         usernameInput.addEventListener("input", function() {
-            user.username = this.value;
-            localStorage.setItem("user", JSON.stringify(user));
+            currentUser.username = this.value;
+            localStorage.setItem("currentUser", JSON.stringify(currentUser));
         });
     }
 
