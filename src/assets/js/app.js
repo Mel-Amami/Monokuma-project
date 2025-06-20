@@ -189,6 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // --- Факты ---
+    /*
     const factForm = document.querySelector(".fact-form");
     const factsList = document.querySelector(".facts-list");
     if (factForm && factsList) {
@@ -215,14 +216,16 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+    */
 
     // --- Галерея ---
-    const gallery = document.querySelector(".gallery");
-    const modal = document.querySelector(".modal");
-    const modalImg = document.querySelector(".modal-content");
-    const closeBtn = document.querySelector(".close-btn");
-    const closeModalBtn = document.querySelector(".close-modal");
-    const uploadForm = document.querySelector(".upload-form");
+    /*
+    const gallery = document.querySelector('.gallery');
+    const modal = document.querySelector('.modal');
+    const modalImg = document.querySelector('.modal-content');
+    const closeBtn = document.querySelector('.close-btn');
+    const closeModalBtn = document.querySelector('.close-modal');
+    const uploadForm = document.querySelector('.upload-form');
 
     if (gallery) {
         gallery.addEventListener("click", function(event) {
@@ -284,9 +287,11 @@ document.addEventListener("DOMContentLoaded", function() {
         fileInput.value = "";
     });
 }
+    */
 
     // --- Теории ---
- const theoryList = document.querySelector(".theory-list");
+    /*
+    const theoryList = document.querySelector(".theory-list");
     const theoryForm = document.querySelector(".theory-form");
     if (theoryForm && theoryList) {
     theoryForm.addEventListener("submit", function(event) {
@@ -331,49 +336,9 @@ document.addEventListener("DOMContentLoaded", function() {
         theoryForm.reset();
     });
 }
-
-
+    */
 
     // --- Личный кабинет: проверка регистрации и профиль ---
-  /*   document.addEventListener("DOMContentLoaded", function() {
-    const savedName = localStorage.getItem("username");
-    const savedAvatar = localStorage.getItem("avatar");
-
-    console.log("Загруженные данные:", savedName, savedAvatar); // 🔹 Проверяем, есть ли данные
-
-    if (savedAvatar) {
-        avatarImg.src = savedAvatar;
-    } else {
-        avatarImg.src = "default-avatar.png"; // 🔹 Устанавливаем аватар по умолчанию
-    }
-
-    if (savedName) {
-        usernameInput.value = savedName;
-    }
-
-    if (avatarUpload) {
-        avatarUpload.addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    avatarImg.src = e.target.result;
-                    localStorage.setItem("avatar", e.target.result);
-                    console.log("Аватар сохранён! ✅");
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    if (usernameInput) {
-        usernameInput.addEventListener("input", function() {
-            localStorage.setItem("username", this.value);
-            console.log("Имя пользователя сохранено! ✅");
-        });
-    }
-});
- */
    if (window.location.pathname.includes("personal.html")) {
         const userData = JSON.parse(localStorage.getItem("user"));
         if (!userData) {
