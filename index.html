@@ -104,11 +104,27 @@ h1 {
 .img {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .img img {
     max-width: 100%;
+    height: auto;
     border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 900px) {
+    .img img {
+        max-width: 90vw;
+    }
+}
+@media (max-width: 600px) {
+    .img img {
+        max-width: 98vw;
+    }
 }
 
 /* Список возможностей */
@@ -317,6 +333,45 @@ footer {
     </footer>
 
 <script src="src/assets/js/app.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const burger = document.getElementById('burger-menu');
+    const navLinks = document.querySelector('.nav-links');
+    const burgerVeil = document.getElementById('burger-veil');
+
+    function checkWidth() {
+      if (window.innerWidth <= 900) {
+        burger.style.display = 'flex';
+        navLinks.classList.remove('open');
+        burgerVeil.classList.remove('active');
+      } else {
+        burger.style.display = 'none';
+        navLinks.classList.remove('open');
+        burgerVeil.classList.remove('active');
+      }
+    }
+
+    checkWidth();
+    window.addEventListener('resize', checkWidth);
+
+    burger.addEventListener('click', function() {
+      navLinks.classList.toggle('open');
+      burgerVeil.classList.toggle('active');
+    });
+
+    burgerVeil.addEventListener('click', function() {
+      navLinks.classList.remove('open');
+      burgerVeil.classList.remove('active');
+    });
+
+    navLinks.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A' && window.innerWidth <= 900) {
+        navLinks.classList.remove('open');
+        burgerVeil.classList.remove('active');
+      }
+    });
+});
+</script>
 
 </body>
 
