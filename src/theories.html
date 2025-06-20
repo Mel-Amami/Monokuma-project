@@ -153,7 +153,7 @@ body {
             <h2>Мемуары Ванитаса</h2>
             <div class="search-box">
                 <input type="text" placeholder="Поиск...">
-                
+                <!-- <button type="submit"></button> -->
             </div>
             <div class="burger" id="burger-menu">
                 <span></span>
@@ -177,19 +177,7 @@ body {
     <section class="theories">
         <div class="container">
             <h1></h1>
-            <div class="theory-list">
-                <div class="theory">
-                    <h3>Теория №1</h3>
-                    <img src="assets/img/photo_2022-08-07_07-29-59.jpg" alt="Теория 1">
-                    <p>Существует вероятность, что персонаж N....</p>
-                </div>
-
-                <div class="theory">
-                    <h3>Теория №2</h3>
-                    <img src="assets/img/photo_2022-08-07_07-29-59.jpg" alt="Теория 2">
-                    <p>Как символика книги намекает на истинную природу главного героя...</p>
-                </div>
-            </div>
+            <div class="theory-list"></div>
 
            <form class="theory-form">
                 <h2>Опубликуйте свою теорию</h2>
@@ -261,16 +249,22 @@ body {
 
         // Загрузка теорий из localStorage
         function loadTheories() {
-            const saved = localStorage.getItem('theories');
-            if (!theoryList) return;
-            if (saved) {
-                const arr = JSON.parse(saved);
-                // Удаляем все, кроме формы
-                theoryList.innerHTML = '';
-                arr.forEach(theory => {
-                    theoryList.appendChild(createTheoryHTML(theory));
-                });
+            let arr;
+            try {
+                arr = JSON.parse(localStorage.getItem('theories'));
+                if (!Array.isArray(arr)) throw new Error();
+            } catch {
+                arr = null;
             }
+            if (arr === null) {
+                arr = [];
+                localStorage.setItem('theories', JSON.stringify(arr));
+            }
+            if (!theoryList) return;
+            theoryList.innerHTML = '';
+            arr.forEach(theory => {
+                theoryList.appendChild(createTheoryHTML(theory));
+            });
         }
         loadTheories();
 
@@ -287,7 +281,13 @@ body {
                 }
                 const saveTheory = (imgData) => {
                     const newTheory = { title, content, image: imgData };
-                    let arr = JSON.parse(localStorage.getItem('theories')) || [];
+                    let arr = null;
+                    try {
+                        arr = JSON.parse(localStorage.getItem('theories'));
+                        if (!Array.isArray(arr)) throw new Error();
+                    } catch {
+                        arr = [];
+                    }
                     arr.push(newTheory);
                     localStorage.setItem('theories', JSON.stringify(arr));
                     theoryList.appendChild(createTheoryHTML(newTheory));
@@ -297,6 +297,9 @@ body {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         saveTheory(e.target.result);
+                    };
+                    reader.onerror = function() {
+                        saveTheory(''); // если ошибка чтения файла
                     };
                     reader.readAsDataURL(imageInput.files[0]);
                 } else {

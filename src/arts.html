@@ -256,23 +256,7 @@ body {
     <section class="arts">
         <div class="container">
             <h1></h1>
-            <div class="gallery">
-                <div class="art">
-                    <img src="assets/img/photo_2022-08-07_07-29-59.jpg" alt="Арт 1" class="preview">
-                    <div class="art-actions">
-                        <button class="like-btn">👍</button>
-                        
-                    </div>
-                </div>
-
-                <div class="art">
-                    <img src="assets/img/photo_2022-06-03_01-18-22.jpg" alt="Арт 2" class="preview">
-                    <div class="art-actions">
-                        <button class="like-btn">👍</button>
-                        
-                    </div>
-                </div>
-            </div>
+            <div class="gallery"></div>
             
             <form class="upload-form">
                 <h2>Загрузите свой арт</h2>
@@ -343,12 +327,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // --- Инициализация: добавляем стартовые арты, если их нет ---
-    if (!localStorage.getItem('arts')) {
-        const defaultArts = [
+    let arr;
+    try {
+        arr = JSON.parse(localStorage.getItem('arts'));
+        if (!Array.isArray(arr)) throw new Error();
+    } catch {
+        arr = null;
+    }
+    if (arr === null) {
+        arr = [
             { src: 'assets/img/photo_2022-08-07_07-29-59.jpg' },
             { src: 'assets/img/photo_2022-06-03_01-18-22.jpg' }
         ];
-        saveArts(defaultArts);
+        saveArts(arr);
     }
     renderArts();
 
@@ -365,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             const reader = new FileReader();
             reader.onload = function(e) {
-                const arr = getArts();
+                const arr = getArts() || [];
                 arr.push({ src: e.target.result });
                 saveArts(arr);
                 renderArts();
