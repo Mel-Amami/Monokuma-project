@@ -494,65 +494,111 @@
           }
         });
 
-        // Обработка формы регистрации
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-          e.preventDefault();
+          // Обработка формы регистрации
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+      e.preventDefault();
 
-          const username = document.getElementById('username').value.trim();
-          const email = document.getElementById('email').value.trim();
-          const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
 
-          // Проверка имени пользователя
-          if (username.length < 3) {
-            alert('Имя пользователя должно содержать минимум 3 символа');
-            return;
-          }
+      // Проверка имени пользователя
+      if (username.length < 3) {
+        alert('Имя пользователя должно содержать минимум 3 символа');
+        return;
+      }
 
-          // Проверка email
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            alert('Введите корректный email адрес');
-            return;
-          }
+      // Проверка email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Введите корректный email адрес');
+        return;
+      }
 
-          // Проверка пароля
-          const passwordError = validatePassword(password);
-          if (passwordError) {
-            alert(passwordError);
-            return;
-          }
+      // Проверка пароля
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        alert(passwordError);
+        return;
+      }
 
-          // Получаем существующих пользователей
-          const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      // Получаем существующих пользователей
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
 
-          // Проверяем, не зарегистрирован ли уже пользователь с таким именем или email
-          const existingUser = registeredUsers.find(u => 
-            u.username === username || u.email === email
-          );
+      // Проверяем, не зарегистрирован ли уже пользователь с таким именем или email
+      const existingUser = registeredUsers.find(u => 
+        u.username === username || u.email === email
+      );
 
-          if (existingUser) {
-            if (existingUser.username === username) {
-              alert('Пользователь с таким именем уже зарегистрирован');
-            } else {
-              alert('Пользователь с таким email уже зарегистрирован');
-            }
-            return;
-          }
+      if (existingUser) {
+        if (existingUser.username === username) {
+          alert('Пользователь с таким именем уже зарегистрирован');
+        } else {
+          alert('Пользователь с таким email уже зарегистрирован');
+        }
+        return;
+      }
 
-          // Добавляем нового пользователя
-          registeredUsers.push({
-            username: username,
-            email: email,
-            password: password,
-            registrationDate: new Date().toISOString()
-          });
+      // Добавляем нового пользователя
+      registeredUsers.push({
+        username: username,
+        email: email,
+        password: password,
+        registrationDate: new Date().toISOString()
+      });
 
-          // Сохраняем в localStorage
-          localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+      // Сохраняем в localStorage
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
 
-          alert('Регистрация успешна! Теперь вы можете войти в систему.');
-          this.reset();
-        });
+      // ДОБАВЛЕНО: Сохраняем текущего пользователя
+      localStorage.setItem('currentUser', JSON.stringify({
+        username: username,
+        email: email
+      }));
+
+      alert('Регистрация успешна! Теперь вы можете войти в систему.');
+      this.reset();
+      
+      // ДОБАВЛЕНО: Перенаправляем на страницу личного кабинета
+      window.location.href = 'personal.html';
+    });
+
+    // Обработка кнопки входа
+    document.getElementById('login-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      // Проверяем, что все поля заполнены
+      if (!username || !email || !password) {
+        alert('Пожалуйста, заполните все поля для входа');
+        return;
+      }
+
+      // Получаем зарегистрированных пользователей из localStorage
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+
+      // Ищем пользователя с такими данными
+      const user = registeredUsers.find(u => 
+        u.username === username && 
+        u.email === email && 
+        u.password === password
+      );
+
+      if (user) {
+        // Пользователь найден - сохраняем данные для входа и переходим в личный кабинет
+        localStorage.setItem('currentUser', JSON.stringify({
+          username: user.username,
+          email: user.email
+        }));
+        alert('Вход выполнен успешно! Переходим в личный кабинет...');
+        window.location.href = 'personal.html'; // ИСПРАВЛЕН ПУТЬ
+      } else {
+        alert('Ошибка! Пользователь с такими данными не найден. Проверьте правильность введенных данных.');
+      }
+    });
     </script>
 </body>
 </html>
